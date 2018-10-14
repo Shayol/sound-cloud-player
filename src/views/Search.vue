@@ -12,7 +12,7 @@
       <SearchResult v-for="item in results" :key="item.id" :search-result="item"/>
     </ul>
 
-    <button v-if="nextHref" @click="searchTrack" class="search__next">
+    <button v-if="nextHref" @click="nextPage" class="search__next">
       Next
     </button>
 
@@ -47,15 +47,13 @@ export default {
   methods: {
     searchTrack() {
       this.$store.dispatch("searchTrack");
+    },
+    nextPage() {
+      this.$store.dispatch("nextPage");
     }
-    // getNext() {
-
-    // }
   }
 };
 </script>
 <style lang="scss">
-.disbled {
-}
 </style>
 
