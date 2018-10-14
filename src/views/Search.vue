@@ -7,31 +7,55 @@
         Go
       </button>
     </form>
+
+    <ul class="search__results">
+      <SearchResult v-for="item in results" :key="item.id" :search-result="item"/>
+    </ul>
+
+    <button v-if="nextHref" @click="searchTrack" class="search__next">
+      Next
+    </button>
+
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-
+import SearchResult from "@/components/SearchResult";
 export default {
   name: "Search",
-  components: {},
-  methods: {},
+  components: {
+    SearchResult
+  },
   computed: {
     query: {
       get() {
         return this.$store.state.query;
       },
       set(value) {
-        this.$store.commit("updateQuery", value);
+        this.$store.commit("updateQuery", { value: value });
       }
+    },
+    results() {
+      return this.$store.state.results;
+    },
+    nextHref() {
+      return this.$store.state.next_href;
     }
   },
   methods: {
     searchTrack() {
       this.$store.dispatch("searchTrack");
     }
+    // getNext() {
+
+    // }
   }
 };
 </script>
+<style lang="scss">
+.disbled {
+}
+</style>
+
