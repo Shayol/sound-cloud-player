@@ -13,7 +13,12 @@ export default new Vuex.Store({
     results: [],
     page: 0,
     next_href: '',
-    history: []
+    history: [],
+    playerData: {
+      title: '',
+      uri: '',
+      artwork_url: '../assets/img/soundcloud.jpg'
+    }
   },
   mutations: {
     updateQuery(state, payload) {
@@ -27,6 +32,13 @@ export default new Vuex.Store({
     },
     updatePage(state) {
       state.page++;
+    },
+    updatePlayer(state, { title, uri, artwork_url }) {
+      state.playerData = {
+        title,
+        uri,
+        artwork_url
+      };
     },
     clearPageCount(state) {
       state.page = 0;

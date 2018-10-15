@@ -1,13 +1,18 @@
 <template>
   <div class="search-result">
-    <strong>{{searchResult.title}}</strong>
+    <a href="" @click.prevent="chooseTrack">{{searchResult.title}}</a>
   </div>
 </template>
 
 <script>
 export default {
   name: "SearchResult",
-  props: ["searchResult"]
+  props: ["searchResult"],
+  methods: {
+    chooseTrack: function() {
+      this.$store.commit("updatePlayer", this.searchResult);
+    }
+  }
 };
 </script>
 

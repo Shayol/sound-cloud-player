@@ -10,4 +10,18 @@
 </template>
 
 <style lang="scss">
+.page {
+  display: flex;
+  min-height: 600px;
+  height: 100%;
+  &__search {
+    flex-basis: 33.33%;
+  }
+  &__player {
+    flex-basis: 33.33%;
+  }
+  &__history {
+    flex-basis: 33.33%;
+  }
+}
 </style>
