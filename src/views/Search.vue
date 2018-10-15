@@ -9,10 +9,10 @@
     </form>
 
     <ul class="search__results">
-      <SearchResult v-for="item in results" :key="item.id" :search-result="item"/>
+      <SearchResult v-for="item in pageResults" :key="item.id" :search-result="item"/>
     </ul>
 
-    <button v-if="nextHref" @click="nextPage" class="search__next">
+    <button v-if="!lastPage" @click="nextPage" class="search__next">
       Next
     </button>
 
@@ -28,6 +28,11 @@ export default {
   components: {
     SearchResult
   },
+  data: function() {
+    return {
+      page: 0
+    };
+  },
   computed: {
     query: {
       get() {
@@ -42,6 +47,12 @@ export default {
     },
     nextHref() {
       return this.$store.state.next_href;
+    },
+    pageResults() {
+      return this.$store.getters.pageResults(this.page);
+    },
+    lastPage() {
+      return this.page == this.$store.getters.allPages;
     }
   },
   methods: {
@@ -49,7 +60,14 @@ export default {
       this.$store.dispatch("searchTrack");
     },
     nextPage() {
-      this.$store.dispatch("nextPage");
+      if (
+        this.page + 1 == this.$store.getters.fullPages &&
+        this.$store.state.next_href
+      ) {
+        this.$store.dispatch("nextPage").then(() => this.page++);
+      } else {
+        this.page++;
+      }
     }
   }
 };

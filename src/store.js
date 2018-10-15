@@ -6,12 +6,13 @@ Vue.use(Vuex)
 
 const PAGE_SIZE = 6;
 const HISTORY_SIZE = 5;
+const MAX_PAGE = 50;
 
 export default new Vuex.Store({
   state: {
     query: "",
     results: [],
-    page: 0,
+    page: 1,
     next_href: '',
     history: [],
     playerData: {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     updateResults(state, payload) {
       state.results = payload.collection;
     },
+    uppendResults(state, payload) {
+      state.results.push(...payload.collection);
+    },
     updateNextHref(state, payload) {
       state.next_href = payload.next_href;
     },
@@ -41,7 +45,7 @@ export default new Vuex.Store({
       };
     },
     clearPageCount(state) {
-      state.page = 0;
+      state.page = 1;
     },
     updateHistory(state) {
       state.history.unshift(state.query);
@@ -59,7 +63,7 @@ export default new Vuex.Store({
       SC.get('/tracks', {
 
         q: context.state.query,
-        limit: PAGE_SIZE,
+        limit: MAX_PAGE,
         linked_partitioning: 1
 
       }).then(function (tracks) {
@@ -70,24 +74,26 @@ export default new Vuex.Store({
 
         if (tracks.next_href) {
           context.commit("updateNextHref", { next_href: tracks.next_href });
+          context.commit("updatePage");
         }
         else {
           context.commit("updateNextHref", { next_href: "" });
+          context.commit("clearPageCount");
         }
       });
     },
     nextPage(context) {
       context.commit("updatePage");
-      SC.get('/tracks', {
+      return SC.get('/tracks', {
 
         q: context.state.query,
-        limit: PAGE_SIZE,
-        linked_partitioning: context.state.page,
-        offset: context.state.page * PAGE_SIZE
+        limit: MAX_PAGE,
+        linked_partitioning: 1,
+        offset: context.state.page * MAX_PAGE
 
       }).then(function (tracks) {
 
-        context.commit("updateResults", { collection: tracks.collection });
+        context.commit("uppendResults", { collection: tracks.collection });
 
         if (tracks.next_href) {
           context.commit("updateNextHref", { next_href: tracks.next_href });
@@ -96,6 +102,22 @@ export default new Vuex.Store({
           context.commit("updateNextHref", { next_href: "" });
         }
       })
+    }
+  },
+  getters: {
+    fullPages(state) {
+      return Math.floor(state.results.length / PAGE_SIZE);
+    },
+    allPages(state) {
+      return Math.ceil(state.results.length / PAGE_SIZE);
+    },
+    pageResults: (state, getters) => (page) => {
+      let start = page * 6;
+      let end = (page + 1) * 6;
+      if (page == getters.allPages && getters.fullPages < getters.allPages) {
+        return state.results.slice(start);
+      }
+      return state.results.slice(start, end);
     }
   }
 })
