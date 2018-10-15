@@ -2,19 +2,17 @@
 
   <div class="player">
 
-    <transition name="fade">
-      <div class="player__title-wrapper">
-        <h2 v-show="animationStageOne" class="player__track-title">{{trackTitle}}</h2>
+    <transition name="fade" mode="out-in">
+      <div v-if="animationStageOne" class="player__title-wrapper" key="title">
+        <h2  class="player__track-title">{{trackTitle}}</h2>
+      </div>
+      <div v-else class="player__content" key="image">
+        <div class="player__image-wrapper">
+          <img :src="trackImage" @click="showWidget=true" alt="track image" class="player__image">
+        </div>
+        <iframe id="sc-widget" class="player__widget" :class="{visible: showWidget}" width="100%" height="20%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F1848538&show_artwork=false"></iframe>
       </div>
     </transition>
-      <transition name="fade-in">
-        <div v-show="!animationStageOne" class="player__content">
-          <div class="player__image-wrapper">
-            <img :src="trackImage" alt="track image" class="player__image">
-          </div>
-          <iframe id="sc-widget" width="100%" height="20%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F1848538&show_artwork=false"></iframe>
-        </div>
-      </transition>
     
 
   </div>
@@ -32,7 +30,8 @@ export default {
   data: function() {
     return {
       widget: {},
-      animationStageOne: false
+      animationStageOne: false,
+      showWidget: false
     };
   },
   mounted() {
@@ -58,25 +57,26 @@ export default {
         buying: false,
         sharing: false
       });
-      setTimeout(() => (this.animationStageOne = false), 100);
     },
     trackTitle: function() {
       this.animationStageOne = true;
-    }
-  },
-  methods: {
-    afterEnter(el, done) {
-      this.animationStageOne = false;
-      done();
+      this.showWidget = false;
+      setTimeout(() => (this.animationStageOne = false), 1000);
     }
   }
+  // methods: {
+  //   afterEnter(el, done) {
+  //     this.animationStageOne = false;
+  //     done();
+  //   }
+  // }
 };
 </script>
 <style lang="scss">
 .player {
   position: relative;
   &__title-wrapper {
-    position: absolute;
+    // position: absolute;
     top: 0;
     bottom: 0;
     right: 0;
@@ -102,19 +102,22 @@ export default {
     align-items: center;
     justify-content: center;
   }
+  &__widget {
+    position: absolute;
+    top: 0;
+  }
 }
-.fade-in-enter-active {
-  transition: opacity 1.8s ease-out;
+.visible {
+  position: static;
 }
-.fade-in-enter {
-  opacity: 0;
-}
+
 .fade-enter-active {
-  transition: opacity 0.3s ease-in;
+  transition: opacity 0.8s ease-in;
 }
 .fade-leave-active {
   transition: opacity 0.8s cubic-bezier(1, 0.5, 0.8, 1);
 }
+.fade-enter,
 .fade-leave-to {
   opacity: 0;
 }

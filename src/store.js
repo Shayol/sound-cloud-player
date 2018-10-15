@@ -17,7 +17,7 @@ export default new Vuex.Store({
     playerData: {
       title: '',
       uri: '',
-      artwork_url: '../assets/img/soundcloud-logo.jpg'
+      artwork_url: '@/assets/img/soundcloud-logo.jpg'
     }
   },
   mutations: {
