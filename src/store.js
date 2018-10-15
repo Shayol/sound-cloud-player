@@ -17,7 +17,7 @@ export default new Vuex.Store({
     playerData: {
       title: '',
       uri: '',
-      artwork_url: '../assets/img/soundcloud.jpg'
+      artwork_url: '../assets/img/soundcloud-logo.jpg'
     }
   },
   mutations: {
@@ -33,7 +33,7 @@ export default new Vuex.Store({
     updatePage(state) {
       state.page++;
     },
-    updatePlayer(state, { title, uri, artwork_url }) {
+    updatePlayer(state, { title, uri, artwork_url = '../assets/img/soundcloud-logo.jpg' }) {
       state.playerData = {
         title,
         uri,
