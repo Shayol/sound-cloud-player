@@ -46,8 +46,6 @@ export default {
   mounted() {
     let widget = document.querySelector("audio");
     this.widget = widget;
-    // let widgetIframe = document.getElementById("sc-widget");
-    // this.widget = SC.Widget(widgetIframe);
   },
   computed: {
     streamURL() {
@@ -65,7 +63,6 @@ export default {
   watch: {
     showWidget: function(value) {
       if (value && this.streamURL) {
-        console.log(this.widget);
         this.widget.play();
       }
     },
