@@ -17,7 +17,7 @@ export default new Vuex.Store({
     history: [],
     playerData: {
       title: '',
-      uri: '',
+      stream_url: '',
       artwork_url: './soundcloud-logo.jpg'
     }
   },
@@ -37,10 +37,10 @@ export default new Vuex.Store({
     updatePage(state) {
       state.page++;
     },
-    updatePlayer(state, { title, uri, artwork_url = './soundcloud-logo.jpg' }) {
+    updatePlayer(state, { title, stream_url, artwork_url = './soundcloud-logo.jpg' }) {
       state.playerData = {
         title,
-        uri,
+        stream_url,
         artwork_url
       };
     },

@@ -10,7 +10,14 @@
         <div class="player__image-wrapper"  @click="showWidget=true" :class="{'player__image-wrapper--short': showWidget}">
           <img :src="trackImage" alt="track image" class="player__image">
         </div>
-        <iframe id="sc-widget" class="player__widget" :class="{visible: showWidget}" width="100%" height="15%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F1848538&show_artwork=false"></iframe>
+        <audio
+          class="player__widget"
+          :class="{visible: showWidget}"
+          controls
+          :src="streamURL">
+          Your browser does not support the <code>audio</code> element.
+        </audio>
+        <!-- <iframe id="sc-widget" class="player__widget"  width="100%" height="15%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F1848538&show_artwork=false"></iframe> -->
       </div>
     </transition>
     
@@ -22,7 +29,9 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-import SC from "@/api/soundcloud-widget";
+// import SC from "@/api/soundcloud-widget";
+// import SC from "@/api/soundcloud";
+import CLIENT_ID from "@/api/soundcloud-client-id";
 
 export default {
   name: "Player",
@@ -35,12 +44,16 @@ export default {
     };
   },
   mounted() {
-    let widgetIframe = document.getElementById("sc-widget");
-    this.widget = SC.Widget(widgetIframe);
+    let widget = document.querySelector("audio");
+    this.widget = widget;
+    // let widgetIframe = document.getElementById("sc-widget");
+    // this.widget = SC.Widget(widgetIframe);
   },
   computed: {
-    newURL() {
-      return this.$store.state.playerData.uri;
+    streamURL() {
+      return `${
+        this.$store.state.playerData.stream_url
+      }?client_id=${CLIENT_ID}`;
     },
     trackImage() {
       return this.$store.state.playerData.artwork_url;
@@ -50,17 +63,28 @@ export default {
     }
   },
   watch: {
-    newURL: function(value) {
-      this.widget.load(value, {
-        show_artwork: false,
-        auto_play: false,
-        buying: false,
-        sharing: false
-      });
+    showWidget: function(value) {
+      if (value && this.streamURL) {
+        console.log(this.widget);
+        this.widget.play();
+      }
     },
     trackTitle: function() {
       this.animationStageOne = true;
       this.showWidget = false;
+    },
+    streamURL: function() {
+      // this.player
+      //   .play()
+      //   .then(function() {
+      //     console.log("Playback started!");
+      //   })
+      //   .catch(function(e) {
+      //     console.error(
+      //       "Playback rejected. Try calling play() from a user interaction.",
+      //       e
+      //     );
+      //   });
     }
   },
   methods: {
@@ -84,9 +108,10 @@ export default {
   }
   &__track-title {
     font-size: 26px;
-    // text-align: center;
     color: dimgray;
     display: inline-block;
+    margin-top: auto;
+    margin-bottom: auto;
   }
   &__content {
     position: relative;
@@ -118,6 +143,8 @@ export default {
 .visible {
   position: static;
   visibility: visible;
+  display: block;
+  width: 100%;
 }
 
 .player__content.fade-enter-active {
