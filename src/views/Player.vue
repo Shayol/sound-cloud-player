@@ -2,15 +2,15 @@
 
   <div class="player">
 
-    <transition name="fade" mode="out-in">
+    <transition name="fade" mode="out-in" @enter="enter">
       <div v-if="animationStageOne" class="player__title-wrapper" key="title">
         <h2  class="player__track-title">{{trackTitle}}</h2>
       </div>
       <div v-else class="player__content" key="image">
-        <div class="player__image-wrapper">
-          <img :src="trackImage" @click="showWidget=true" alt="track image" class="player__image">
+        <div class="player__image-wrapper"  @click="showWidget=true" :class="{'player__image-wrapper--short': showWidget}">
+          <img :src="trackImage" alt="track image" class="player__image">
         </div>
-        <iframe id="sc-widget" class="player__widget" :class="{visible: showWidget}" width="100%" height="20%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F1848538&show_artwork=false"></iframe>
+        <iframe id="sc-widget" class="player__widget" :class="{visible: showWidget}" width="100%" height="15%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F1848538&show_artwork=false"></iframe>
       </div>
     </transition>
     
@@ -61,15 +61,16 @@ export default {
     trackTitle: function() {
       this.animationStageOne = true;
       this.showWidget = false;
-      setTimeout(() => (this.animationStageOne = false), 1000);
+      // setTimeout(() => (this.animationStageOne = false), 1000);
+    }
+  },
+  methods: {
+    enter(el, done) {
+      if (el.classList.contains("player__title-wrapper")) {
+        this.animationStageOne = false;
+      }
     }
   }
-  // methods: {
-  //   afterEnter(el, done) {
-  //     this.animationStageOne = false;
-  //     done();
-  //   }
-  // }
 };
 </script>
 <style lang="scss">
@@ -96,26 +97,33 @@ export default {
   }
   &__image-wrapper {
     width: 100%;
+    height: 100%;
     min-height: 200px;
     border: 1px solid grey;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: white;
+    z-index: 8;
+    &\--short {
+      height: 85%;
+    }
   }
   &__widget {
     position: absolute;
-    top: 0;
+    visibility: hidden;
   }
 }
 .visible {
   position: static;
+  visibility: visible;
 }
 
-.fade-enter-active {
-  transition: opacity 0.8s ease-in;
+.player__content.fade-enter-active {
+  transition: opacity 0.8s cubic-bezier(0.17, 0.67, 0.83, 0.67);
 }
-.fade-leave-active {
-  transition: opacity 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+.player__title-wrapper.fade-leave-active {
+  transition: opacity 1.2s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .fade-enter,
 .fade-leave-to {
