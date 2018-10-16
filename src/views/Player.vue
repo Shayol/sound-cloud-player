@@ -10,14 +10,11 @@
         <div class="player__image-wrapper"  @click="showWidget=true" :class="{'player__image-wrapper--short': showWidget}">
           <img :src="trackImage" alt="track image" class="player__image">
         </div>
-        <audio
-          class="player__widget"
-          :class="{visible: showWidget}"
-          controls
-          :src="streamURL">
-          Your browser does not support the <code>audio</code> element.
-        </audio>
-        <!-- <iframe id="sc-widget" class="player__widget"  width="100%" height="15%" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F1848538&show_artwork=false"></iframe> -->
+        <div class="player__widget" :class="{visible: showWidget}">
+          <button class="player__play" @click="player.play()">Play</button>
+          <button class="player__pause" @click="player.pause()">Pause</button>
+          <span>{{duration}}</span>
+        </div>
       </div>
     </transition>
     
@@ -40,11 +37,13 @@ export default {
     return {
       widget: {},
       animationStageOne: false,
-      showWidget: false
+      showWidget: false,
+      player: {},
+      duration: 0
     };
   },
   mounted() {
-    let widget = document.querySelector("audio");
+    let widget = document.querySelector(".player__widget");
     this.widget = widget;
   },
   computed: {
@@ -63,25 +62,24 @@ export default {
   watch: {
     showWidget: function(value) {
       if (value && this.streamURL) {
-        this.widget.play();
+        let player = new Audio(this.streamURL);
+        this.player = player;
+
+        this.player.addEventListener("loadeddata", () => {
+          if (this.player.readyState >= 2) {
+            this.player.play();
+            this.duration = parseInt(this.player.duration);
+          }
+        });
+
+        // this.widget.play();
+      } else {
+        this.player.pause();
       }
     },
     trackTitle: function() {
       this.animationStageOne = true;
       this.showWidget = false;
-    },
-    streamURL: function() {
-      // this.player
-      //   .play()
-      //   .then(function() {
-      //     console.log("Playback started!");
-      //   })
-      //   .catch(function(e) {
-      //     console.error(
-      //       "Playback rejected. Try calling play() from a user interaction.",
-      //       e
-      //     );
-      //   });
     }
   },
   methods: {
