@@ -76,37 +76,39 @@ export default {
 .player {
   position: relative;
   &__title-wrapper {
-    // position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10;
+    height: 100%;
   }
   &__track-title {
     font-size: 26px;
-    text-align: center;
+    // text-align: center;
     color: dimgray;
+    display: inline-block;
   }
   &__content {
     position: relative;
   }
   &__image-wrapper {
-    width: 100%;
-    height: 100%;
     min-height: 200px;
     border: 1px solid grey;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: white;
+    padding: 10px;
     z-index: 8;
     &\--short {
       height: 85%;
     }
+  }
+  &__image {
+    height: auto;
+    width: auto;
+    max-width: 100%;
+    display: inline-block;
   }
   &__widget {
     position: absolute;
