@@ -61,7 +61,6 @@ export default {
     trackTitle: function() {
       this.animationStageOne = true;
       this.showWidget = false;
-      // setTimeout(() => (this.animationStageOne = false), 1000);
     }
   },
   methods: {

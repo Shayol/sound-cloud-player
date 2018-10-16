@@ -3,7 +3,7 @@
     <h1>Recent searches</h1>
     <ul class="history__list">
         <!-- eslint-disable-next-line vue/require-v-for-key -->
-        <li v-for="item in searchHistory">{{item}}</li>
+        <li class="history__item" @click="startSearch(item)" v-for="item in searchHistory">{{item}}</li>
     </ul>
   </div>
 </template>
@@ -22,6 +22,22 @@ export default {
     searchHistory() {
       return this.$store.state.history;
     }
+  },
+  methods: {
+    startSearch(query) {
+      this.$store.commit("updateQuery", { value: query });
+      this.$store.dispatch("searchTrack");
+    }
   }
 };
 </script>
+<style lang="scss">
+.history {
+  &__item {
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+</style>
