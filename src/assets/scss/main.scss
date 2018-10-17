@@ -1,0 +1,12 @@
+@import "reset";
+@import "variables";
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Verdana;
+    height: 100vh;
+}

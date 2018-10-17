@@ -2,7 +2,7 @@
   <div class="search">
     
     <form action="" @submit.prevent="searchTrack" class="search__form">
-      <input type="text" v-model="query" class="search__input">
+      <input placeholder="Search..." type="text" v-model="query" class="search__input">
       <button type="submit" class="search__submit">
         Go
       </button>
@@ -12,9 +12,10 @@
       <SearchResult v-for="item in pageResults" :key="item.id" :search-result="item"/>
     </ul>
 
-    <button v-if="!lastPage" @click="nextPage" class="search__next">
-      Next
-    </button>
+    <div class="search__bottom-buttons">
+        <button v-if="!lastPage" @click="nextPage" class="search__next">
+        </button>
+    </div>
 
   </div>
 </template>
@@ -73,5 +74,67 @@ export default {
 };
 </script>
 <style lang="scss">
+.search {
+  display: flex;
+  flex-direction: column;
+  &__input {
+    height: 40px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border: none;
+    outline: none;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
+    font-size: 16px;
+    padding: 8px 8px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    transition: all 0.3s ease-out;
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+    }
+    &:placeholder {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 16px;
+    }
+  }
+  &__bottom-buttons {
+    margin-top: auto;
+  }
+
+  &__next {
+    outline: none;
+    border: 0;
+    position: relative;
+    width: 40px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2),
+      inset 0 3px 2px rgba(255, 255, 255, 0.22),
+      inset 0 -3px 2px rgba(0, 0, 0, 0.15),
+      inset 0 20px 10px rgba(255, 255, 255, 0.12),
+      0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
+
+    &:after {
+      position: absolute;
+      content: "";
+      height: 30px;
+      top: 50%;
+      left: 10;
+      transform: translateY(-50%) rotate(45deg);
+      border-top: 30px solid rgba(255, 255, 255, 0.5);
+      border-left: 30px solid transparent;
+      box-shadow: 3px -3px 5px black;
+      border-right: 0;
+      border-bottom: 0;
+      width: 30px;
+    }
+  }
+  &__results {
+    padding: 1.5em;
+  }
+}
 </style>
 

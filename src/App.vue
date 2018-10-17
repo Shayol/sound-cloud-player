@@ -11,6 +11,10 @@
 
 <style lang="scss">
 .page {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 2%;
   display: flex;
   min-height: 600px;
   height: 100%;

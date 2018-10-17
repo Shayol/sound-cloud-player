@@ -20,8 +20,8 @@
           <div class="player__progress progress">
             <div :style="{width: progress}" class="progress__bar"></div>
             <div class="player__timing">
-              <span class="player__current-time"><span v-html="currentTime"></span></span> 
-              <span class="player__duration"><span v-html="duration"></span></span>
+              <span v-html="currentTime" class="player__current-time"></span> 
+              <span v-html="duration" class="player__duration"></span>
             </div>
           </div>
         </div>
@@ -144,9 +144,10 @@ export default {
   }
   &__content {
     position: relative;
+    height: 100%;
   }
   &__image-wrapper {
-    min-height: 200px;
+    height: 100%;
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -158,8 +159,10 @@ export default {
       inset 0 -3px 2px rgba(0, 0, 0, 0.17),
       inset 0 20px 10px rgba(255, 255, 255, 0.12),
       0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
+    transition: height 0.6s ease-out;
     &\--short {
       height: 85%;
+      margin-bottom: 10px;
     }
   }
   &__image {
@@ -218,22 +221,24 @@ export default {
     left: 0;
   }
   &__duration {
-    color: white;
+    color: black;
     font-weight: bold;
+    padding-bottom: 2px;
   }
   &__current-time {
-    color: white;
+    color: black;
     font-weight: bold;
+    padding-bottom: 2px;
   }
   &__timing {
     position: absolute;
-    font-size: 10px;
+    font-size: 8px;
     left: 50%;
-    top: 0;
-    height: 100%;
-    display: inline-block;
-    transform: translateX(-50%);
-    line-height: 20px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
   }
   &__colons {
     display: inline-block;
@@ -263,7 +268,7 @@ export default {
     border-bottom-right-radius: 20px;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
-    background-image: linear-gradient(to bottom, #f2b1ff, #8c52b4);
+    background-image: linear-gradient(to bottom, #b6ffc1, #50b561);
     box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3),
       inset 0 -2px 6px rgba(0, 0, 0, 0.4);
     position: relative;
