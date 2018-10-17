@@ -11,10 +11,12 @@
     <ul class="search__results">
       <SearchResult v-for="item in pageResults" :key="item.id" :search-result="item"/>
     </ul>
-
+    
     <div class="search__bottom-buttons">
-        <button v-if="!lastPage" @click="nextPage" class="search__next">
-        </button>
+        <svg v-if="!lastPage" @click="nextPage" class="search__next" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      viewBox="0 0 297.5 297.5" style="enable-background:new 0 0 297.5 297.5;" xml:space="preserve">
+    <polygon points="297.5,148.25 148,33.25 148,100.25 0,100.25 0,199.25 148,199.25 148,264.25 "/>
+    </svg>
     </div>
 
   </div>
@@ -104,6 +106,7 @@ export default {
   }
 
   &__next {
+    font-size: 25px;
     outline: none;
     border: 0;
     position: relative;
@@ -116,20 +119,8 @@ export default {
       inset 0 -3px 2px rgba(0, 0, 0, 0.15),
       inset 0 20px 10px rgba(255, 255, 255, 0.12),
       0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
-
-    &:after {
-      position: absolute;
-      content: "";
-      height: 30px;
-      top: 50%;
-      left: 10;
-      transform: translateY(-50%) rotate(45deg);
-      border-top: 30px solid rgba(255, 255, 255, 0.5);
-      border-left: 30px solid transparent;
-      box-shadow: 3px -3px 5px black;
-      border-right: 0;
-      border-bottom: 0;
-      width: 30px;
+    &:active {
+      transform: scale(1.1);
     }
   }
   &__results {

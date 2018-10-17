@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
   <div class="page">
     <router-view class="page__search"></router-view>
     <router-view class="page__player" name="player"></router-view>
@@ -10,14 +10,20 @@
 </template>
 
 <style lang="scss">
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .page {
   max-width: 960px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 2%;
-  display: flex;
-  min-height: 600px;
+  width: 100%;
   height: 100%;
+  max-height: 500px;
+  padding: 2%;
+  display: flex;
+
   justify-content: space-between;
   &__search {
     flex-basis: 30%;
