@@ -11,10 +11,19 @@
           <img :src="trackImage" alt="track image" class="player__image">
         </div>
         <div class="player__widget" :class="{visible: showWidget}">
-          <button class="player__play" @click="player.play()">Play</button>
-          <button class="player__pause" @click="player.pause()">Pause</button>
-          <span class="player__current-time">{{currentTime}}</span> 
-          <span class="player__duration">{{duration}}</span>
+          <div class="player__buttons">
+            <button class="player__pause" @click="player.pause()">&#10073;&#10073;</button>
+            <button v-if="player.paused" class="player__play" @click="player.play()">&#9658;</button>
+            
+          </div>
+          
+          <div class="player__progress progress">
+            <div :style="{width: progress}" class="progress__bar"></div>
+            <div class="player__timing">
+              <span class="player__current-time"><span v-html="currentTime"></span></span> 
+              <span class="player__duration"><span v-html="duration"></span></span>
+            </div>
+          </div>
         </div>
       </div>
     </transition>
@@ -26,9 +35,6 @@
 
 <script>
 // @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
-// import SC from "@/api/soundcloud-widget";
-// import SC from "@/api/soundcloud";
 import CLIENT_ID from "@/api/soundcloud-client-id";
 
 export default {
@@ -61,9 +67,16 @@ export default {
       return this.totalDuration ? this._parseTime(this.totalDuration) : "";
     },
     currentTime() {
-      return this.timeNow ? this._parseTime(this.timeNow) + "/" : "";
+      return this.timeNow
+        ? this._parseTime(this.timeNow) +
+            "<span class='player__separator'>/</span>"
+        : "";
     },
-    progress() {}
+    progress() {
+      return this.timeNow
+        ? parseInt((this.timeNow / this.totalDuration) * 100) + "%"
+        : "0%";
+    }
   },
   watch: {
     showWidget: function(value) {
@@ -106,7 +119,7 @@ export default {
         ("0" + hour).slice(-2),
         ("0" + min).slice(-2),
         ("0" + sec).slice(-2)
-      ].join(":");
+      ].join("<span class='player__colons'>:</span>");
       return time;
     }
   }
@@ -154,12 +167,94 @@ export default {
   &__widget {
     position: absolute;
     visibility: hidden;
+    height: 30px;
+    display: flex;
+  }
+  &__progress {
+    height: 20px;
+    width: 100%;
+  }
+  &__buttons {
+    position: relative;
+    width: 24px;
+    height: 100%;
+  }
+  &__play,
+  &__pause {
+    width: 24px;
+    height: 20px;
+    outline: none;
+    border: none;
+    display: inline-block;
+    border-radius: 5px;
+    text-align: center;
+    background-color: white;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2),
+      inset 0 3px 2px rgba(255, 255, 255, 0.22),
+      inset 0 -3px 2px rgba(0, 0, 0, 0.15),
+      inset 0 20px 10px rgba(255, 255, 255, 0.12),
+      0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  &__duration {
+    color: white;
+    font-weight: bold;
+  }
+  &__current-time {
+    color: white;
+    font-weight: bold;
+  }
+  &__timing {
+    position: absolute;
+    font-size: 10px;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    display: inline-block;
+    transform: translateX(-50%);
+    line-height: 20px;
+  }
+  &__colons {
+    display: inline-block;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+  &__separator {
+    display: inline-block;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+}
+.progress {
+  /* Can be anything */
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  background: rgba(124, 122, 122, 0.698);
+  border-radius: 20px;
+  padding: 4px 6px;
+  box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+  &__bar {
+    width: 0%;
+    height: 100%;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background-image: linear-gradient(to bottom, #f2b1ff, #8c52b4);
+    box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
   }
 }
 .visible {
   position: static;
   visibility: visible;
-  display: block;
+  display: flex;
   width: 100%;
 }
 
