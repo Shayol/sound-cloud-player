@@ -13,7 +13,7 @@
         <div class="player__widget" :class="{visible: showWidget}">
           <div class="player__buttons">
             <button class="player__pause" @click="player.pause()">&#10073;&#10073;</button>
-            <button v-if="player.paused" class="player__play" @click="player.play()">&#9658;</button>
+            <button v-show="player.paused" class="player__play" @click="player.play()">&#9658;</button>
             
           </div>
           
@@ -147,13 +147,17 @@ export default {
   }
   &__image-wrapper {
     min-height: 200px;
-    border: 1px solid grey;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: white;
     padding: 10px;
     z-index: 8;
+    box-shadow: inset 0 3px 2px rgba(255, 255, 255, 0.22),
+      inset 0 -3px 2px rgba(0, 0, 0, 0.17),
+      inset 0 20px 10px rgba(255, 255, 255, 0.12),
+      0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
     &\--short {
       height: 85%;
     }
@@ -167,8 +171,19 @@ export default {
   &__widget {
     position: absolute;
     visibility: hidden;
-    height: 30px;
+    height: 40px;
     display: flex;
+    align-items: center;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2),
+      inset 0 3px 2px rgba(255, 255, 255, 0.22),
+      inset 0 -3px 2px rgba(0, 0, 0, 0.15),
+      inset 0 20px 10px rgba(255, 255, 255, 0.12),
+      0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    padding: 0 8px;
   }
   &__progress {
     height: 20px;
@@ -178,6 +193,9 @@ export default {
     position: relative;
     width: 24px;
     height: 100%;
+    margin-right: 8px;
+    display: inline-block;
+    height: 20px;
   }
   &__play,
   &__pause {
@@ -233,10 +251,11 @@ export default {
   box-sizing: border-box;
   display: inline-block;
   position: relative;
-  background: rgba(124, 122, 122, 0.698);
+  background: #555;
   border-radius: 20px;
   padding: 4px 6px;
   box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+
   &__bar {
     width: 0%;
     height: 100%;
