@@ -13,7 +13,8 @@
         <div class="player__widget" :class="{visible: showWidget}">
           <button class="player__play" @click="player.play()">Play</button>
           <button class="player__pause" @click="player.pause()">Pause</button>
-          <span>{{duration}}</span>
+          <span class="player__current-time">{{currentTime}}</span> 
+          <span class="player__duration">{{duration}}</span>
         </div>
       </div>
     </transition>
@@ -39,13 +40,11 @@ export default {
       animationStageOne: false,
       showWidget: false,
       player: {},
-      duration: 0
+      totalDuration: "",
+      timeNow: ""
     };
   },
-  mounted() {
-    let widget = document.querySelector(".player__widget");
-    this.widget = widget;
-  },
+  mounted() {},
   computed: {
     streamURL() {
       return `${
@@ -57,7 +56,14 @@ export default {
     },
     trackTitle() {
       return this.$store.state.playerData.title;
-    }
+    },
+    duration() {
+      return this.totalDuration ? this._parseTime(this.totalDuration) : "";
+    },
+    currentTime() {
+      return this.timeNow ? this._parseTime(this.timeNow) + "/" : "";
+    },
+    progress() {}
   },
   watch: {
     showWidget: function(value) {
@@ -65,14 +71,7 @@ export default {
         let player = new Audio(this.streamURL);
         this.player = player;
 
-        this.player.addEventListener("loadeddata", () => {
-          if (this.player.readyState >= 2) {
-            this.player.play();
-            this.duration = parseInt(this.player.duration);
-          }
-        });
-
-        // this.widget.play();
+        this.player.addEventListener("loadeddata", this._playerHandler);
       } else {
         this.player.pause();
       }
@@ -87,6 +86,28 @@ export default {
       if (el.classList.contains("player__title-wrapper")) {
         this.animationStageOne = false;
       }
+    },
+    _playerHandler() {
+      if (this.player.readyState >= 2) {
+        this.player.play().then(() => {
+          this.player.addEventListener("timeupdate", () => {
+            this.timeNow = parseInt(this.player.currentTime);
+          });
+          this.totalDuration = parseInt(this.player.duration);
+        });
+      }
+    },
+    _parseTime(t) {
+      let min = Math.floor(t / 60);
+      let hour = Math.floor(min / 60);
+      min = min % 60;
+      let sec = t % 60;
+      let time = [
+        ("0" + hour).slice(-2),
+        ("0" + min).slice(-2),
+        ("0" + sec).slice(-2)
+      ].join(":");
+      return time;
     }
   }
 };
