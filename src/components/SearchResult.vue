@@ -48,6 +48,7 @@ export default {
     flex-shrink: 1;
     margin-bottom: 6%;
     background-color: white;
+    box-shadow: 2px 2px 6px #000;
     &:hover {
       transform: scale(1.05);
     }

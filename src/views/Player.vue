@@ -264,7 +264,7 @@ export default {
   box-sizing: border-box;
   display: inline-block;
   position: relative;
-  background: #555;
+  background: #818181;
   border-radius: 20px;
   padding: 4px 6px;
   box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
