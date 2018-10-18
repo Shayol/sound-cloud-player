@@ -20,7 +20,7 @@
   max-width: 960px;
   width: 100%;
   height: 100%;
-  min-height: 300px;
+  min-height: 500px;
   max-height: 600px;
   padding: 2%;
   display: flex;

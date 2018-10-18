@@ -13,11 +13,19 @@
     </ol>
     
     <div class="search__bottom-buttons">
-        <svg v-if="!lastPage" @click="nextPage" class="search__next search__bottom-button" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        
+        <svg v-if="page > 0" @click="prevPage" class="search__prev search__bottom-button search__nav"  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          viewBox="0 0 297.5 297.5" style="enable-background:new 0 0 297.5 297.5;" xml:space="preserve">
+        <polygon points="0,149.2 149.5,264.3 149.5,197.3 297.5,197.3 297.5,98.3 149.5,98.3 149.5,33.3 "/>
+        </svg>
+
+        <svg v-if="!lastPage" @click="nextPage" class="search__next search__bottom-button search__nav" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         viewBox="0 0 297.5 297.5" style="enable-background:new 0 0 297.5 297.5;" xml:space="preserve">
         <polygon points="297.5,148.25 148,33.25 148,100.25 0,100.25 0,199.25 148,199.25 148,264.25 "/>
         </svg>
+
         <div v-show="pageResults.length > 0" class="search__display-pref">
+
           <svg @click="changeDisplayPref" class="search__display-list search__bottom-button" xmlns:svg="http://www.w3.org/2000/svg"
               xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 22.3 17.5"
               style="enable-background:new 0 0 22.3 17.5;" xml:space="preserve">
@@ -38,6 +46,7 @@
                 s0.2,0.1,0.3,0.1h16.7c0.1,0,0.2,0,0.3-0.1S-8.1,1373.5-8.1,1373.4z"/>
             </g>
           </svg>
+
           <div @click="changeDisplayPref" class="search__display-thumbnails search__bottom-button">
           </div>
         </div>
@@ -102,6 +111,11 @@ export default {
         this.page++;
       }
     },
+    prevPage() {
+      if (this.page > 0) {
+        this.page--;
+      }
+    },
     changeDisplayPref() {
       this.$store.commit("updateDisplayThumbnails");
     }
@@ -126,16 +140,22 @@ export default {
     color: white;
     border: none;
     outline: none;
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-      sans-serif;
     font-size: 16px;
     padding: 8px 16px;
+
+    opacity: 0.7;
+    &:focus {
+      opacity: 1;
+      ~ .search__submit {
+        opacity: 1;
+      }
+    }
 
     background: #818181;
     box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.5),
       inset 0 -4px 8px rgba(0, 0, 0, 0.5);
 
-    &:placeholder {
+    &::placeholder {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 16px;
       color: white;
@@ -150,6 +170,8 @@ export default {
     height: 40px;
     background-image: linear-gradient(to bottom, #818181, #555);
     color: white;
+    opacity: 0.7;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
   &__bottom-buttons {
     margin-top: auto;
@@ -157,7 +179,7 @@ export default {
     padding: 0.5em;
   }
 
-  &__next {
+  &__nav {
     font-size: 25px;
     outline: none;
     border: 0;
@@ -174,6 +196,9 @@ export default {
     &:active {
       transform: scale(1.1);
     }
+  }
+  &__prev {
+    margin-right: 4px;
   }
   &__display-pref {
     margin-left: auto;
