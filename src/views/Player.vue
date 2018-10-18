@@ -12,8 +12,8 @@
         </div>
         <div class="player__widget" :class="{visible: showWidget}">
           <div class="player__buttons">
-            <button v-if="!player.paused" class="player__pause" @click="player.pause()">&#10073;&#10073;</button>
-            <button v-if="player.paused" class="player__play" @click="player.play()">&#9658;</button>
+            <button v-if="!paused" class="player__pause" @click="player.pause()">&#10073;&#10073;</button>
+            <button v-if="paused" class="player__play" @click="player.play()">&#9658;</button>
             
           </div>
           
@@ -47,7 +47,8 @@ export default {
       showWidget: false,
       player: {},
       totalDuration: "",
-      timeNow: ""
+      timeNow: "",
+      paused: true
     };
   },
   mounted() {},
@@ -98,7 +99,7 @@ export default {
     }
   },
   methods: {
-    enter(el, done) {
+    enter(el) {
       if (el.classList.contains("player__title-wrapper")) {
         setTimeout(() => {
           this.animationStageOne = false;
@@ -107,6 +108,13 @@ export default {
     },
     _playerHandler() {
       if (this.player.readyState >= 2) {
+        this.player.addEventListener("pause", () => {
+          this.paused = true;
+        });
+        this.player.addEventListener("play", () => {
+          this.paused = false;
+        });
+
         this.player.play().then(() => {
           this.player.addEventListener("timeupdate", () => {
             this.timeNow = parseInt(this.player.currentTime);

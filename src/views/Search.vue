@@ -138,6 +138,7 @@ export default {
     &:placeholder {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 16px;
+      color: white;
     }
   }
   &__form {
