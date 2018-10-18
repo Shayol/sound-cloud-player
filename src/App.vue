@@ -20,7 +20,8 @@
   max-width: 960px;
   width: 100%;
   height: 100%;
-  max-height: 500px;
+  min-height: 300px;
+  max-height: 600px;
   padding: 2%;
   display: flex;
 
@@ -31,7 +32,6 @@
   &__player {
     flex-basis: 30%;
     flex-grow: 0;
-    max-width: 30%;
   }
   &__history {
     flex-basis: 30%;

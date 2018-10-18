@@ -19,7 +19,9 @@ export default new Vuex.Store({
       title: '',
       stream_url: '',
       artwork_url: './soundcloud-logo.jpg'
-    }
+    },
+    displayThumbnails: false,
+    default_img: './soundcloud-logo.jpg'
   },
   mutations: {
     updateQuery(state, payload) {
@@ -44,6 +46,10 @@ export default new Vuex.Store({
         artwork_url
       };
     },
+    updateDisplayThumbnails(state) {
+      state.displayThumbnails = !state.displayThumbnails;
+      localStorage.setItem("display-pref", JSON.stringify(state.displayThumbnails));
+    },
     clearPageCount(state) {
       state.page = 1;
     },
@@ -56,6 +62,9 @@ export default new Vuex.Store({
     },
     initializeHistory(state) {
       state.history = JSON.parse(localStorage.getItem('history')) || [];
+    },
+    initializeDisplayThumbnails(state) {
+      state.displayThumbnails = (JSON.parse(localStorage.getItem('display-pref')) == 'true') || false;
     }
   },
   actions: {
@@ -63,6 +72,7 @@ export default new Vuex.Store({
       SC.get('/tracks', {
 
         q: context.state.query,
+        filter: 'public',
         limit: MAX_PAGE,
         linked_partitioning: 1
 

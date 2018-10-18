@@ -7,13 +7,13 @@
         <h2  class="player__track-title">{{trackTitle}}</h2>
       </div>
       <div v-else class="player__content" key="image">
-        <div class="player__image-wrapper"  @click="showWidget=true" :class="{'player__image-wrapper--short': showWidget}">
+        <div class="player__image-wrapper"  @click="showWidget=true">
           <img :src="trackImage" alt="track image" class="player__image">
         </div>
         <div class="player__widget" :class="{visible: showWidget}">
           <div class="player__buttons">
-            <button class="player__pause" @click="player.pause()">&#10073;&#10073;</button>
-            <button v-show="player.paused" class="player__play" @click="player.play()">&#9658;</button>
+            <button v-if="!player.paused" class="player__pause" @click="player.pause()">&#10073;&#10073;</button>
+            <button v-if="player.paused" class="player__play" @click="player.play()">&#9658;</button>
             
           </div>
           
@@ -58,7 +58,10 @@ export default {
       }?client_id=${CLIENT_ID}`;
     },
     trackImage() {
-      return this.$store.state.playerData.artwork_url;
+      return this.$store.state.playerData.artwork_url.replace(
+        "large",
+        "t300x300"
+      );
     },
     trackTitle() {
       return this.$store.state.playerData.title;
@@ -137,17 +140,23 @@ export default {
   }
   &__track-title {
     font-size: 26px;
-    color: dimgray;
+    color: #555;
     display: inline-block;
     margin-top: auto;
     margin-bottom: auto;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px #555;
   }
   &__content {
     position: relative;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   &__image-wrapper {
-    height: 100%;
+    height: 85%;
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -160,10 +169,7 @@ export default {
       inset 0 20px 10px rgba(255, 255, 255, 0.12),
       0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
     transition: height 0.6s ease-out;
-    &\--short {
-      height: 85%;
-      margin-bottom: 10px;
-    }
+    margin-bottom: 10px;
   }
   &__image {
     height: auto;
