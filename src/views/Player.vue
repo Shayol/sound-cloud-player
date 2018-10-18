@@ -10,7 +10,7 @@
         <div class="player__image-wrapper"  @click="showWidget=true">
           <img :src="trackImage" alt="track image" class="player__image">
         </div>
-        <div class="player__widget" :class="{visible: showWidget}">
+        <div class="player__widget" :class="{'widget-visible': showWidget}">
           <div class="player__buttons">
             <button v-if="!paused" class="player__pause player__button" @click="player.pause()">&#10073;&#10073;</button>
             <button v-if="paused" class="player__play player__button" @click="player.play()">&#9658;</button>            
@@ -23,9 +23,9 @@
               <span v-html="duration" class="player__duration"></span>
             </div>
           </div>
-          <div class="player__button player__volume">
+          <div @click.self="showVolume = !showVolume" class="player__button player__volume">
             &#128266;
-            <input type="range" class="player__volume-slider" v-model.number="volume" @input="changeVolume" min="1" max="10">
+            <input type="range" class="player__volume-slider" :class="{'visible': showVolume}" v-model.number="volume" @input="changeVolume" min="1" max="10">
           </div>
 
         </div>
@@ -49,6 +49,7 @@ export default {
       widget: {},
       animationStageOne: false,
       showWidget: false,
+      showVolume: false,
       player: {},
       totalDuration: "",
       timeNow: "",
@@ -178,8 +179,8 @@ export default {
     justify-content: space-between;
   }
   &__image-wrapper {
-    height: 85%;
     border-radius: 8px;
+    height: 80%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -218,7 +219,7 @@ export default {
   }
   &__progress {
     height: 20px;
-    width: 100%;
+    flex-grow: 1;
   }
   &__buttons {
     position: relative;
@@ -243,6 +244,7 @@ export default {
       inset 0 -3px 2px rgba(0, 0, 0, 0.15),
       inset 0 20px 10px rgba(255, 255, 255, 0.12),
       0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
   }
 
   &__play,
@@ -253,8 +255,10 @@ export default {
   }
   &__volume {
     position: relative;
+    margin-left: 8px;
   }
   &__volume-slider {
+    visibility: hidden;
     width: 100px;
     height: 6px;
     transform: rotate(-90deg);
@@ -274,7 +278,7 @@ export default {
       inset 0 -3px 2px rgba(0, 0, 0, 0.15),
       inset 0 20px 10px rgba(255, 255, 255, 0.12),
       0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
-    // background: linear-gradient(to top, #818181, #000);
+
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
@@ -298,7 +302,6 @@ export default {
       background: #b6ffc1;
       cursor: pointer;
     }
-    // visibility: hidden;
   }
   &__duration {
     color: black;
@@ -355,11 +358,15 @@ export default {
     overflow: hidden;
   }
 }
-.visible {
+.widget-visible {
   position: static;
   visibility: visible;
   display: flex;
   width: 100%;
+}
+
+.visible {
+  visibility: visible;
 }
 
 .player__content.fade-enter-active {

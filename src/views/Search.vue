@@ -213,7 +213,6 @@ export default {
   }
   &__results {
     padding: 1.5em 0.5em;
-    flex-shrink: 1;
   }
 }
 .thumbnails {
