@@ -45,11 +45,19 @@ export default {
 .thumbnails {
   &__item {
     flex-basis: auto;
-    flex-shrink: 0;
-    margin-bottom: 10%;
+    flex-shrink: 1;
+    margin-bottom: 6%;
+    background-color: white;
+    &:hover {
+      transform: scale(1.05);
+    }
+    display: inline-block;
   }
   &__link {
     position: relative;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
   }
   &__title {
     font-size: 8px;
@@ -64,10 +72,12 @@ export default {
     left: 0;
     right: 0;
     color: black;
-    background-color: rgba(255, 255, 255, 0.39);
+    background-color: rgba(255, 255, 255, 0.45);
   }
   &__img {
     max-width: 100px;
+    width: 100%;
+    height: auto;
     max-height: 100px;
   }
 }

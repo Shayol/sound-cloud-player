@@ -100,7 +100,9 @@ export default {
   methods: {
     enter(el, done) {
       if (el.classList.contains("player__title-wrapper")) {
-        this.animationStageOne = false;
+        setTimeout(() => {
+          this.animationStageOne = false;
+        }, 200);
       }
     },
     _playerHandler() {
@@ -168,14 +170,14 @@ export default {
       inset 0 -3px 2px rgba(0, 0, 0, 0.17),
       inset 0 20px 10px rgba(255, 255, 255, 0.12),
       0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
-    transition: height 0.6s ease-out;
     margin-bottom: 10px;
   }
   &__image {
     height: auto;
-    width: auto;
-    max-width: 100%;
-    display: inline-block;
+    max-width: 300px;
+    max-height: 300px;
+    width: 100%;
+    display: block;
   }
   &__widget {
     position: absolute;

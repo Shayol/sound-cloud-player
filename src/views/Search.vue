@@ -112,27 +112,43 @@ export default {
 .search {
   display: flex;
   flex-direction: column;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2),
+    inset 0 3px 2px rgba(255, 255, 255, 0.22),
+    inset 0 -3px 2px rgba(0, 0, 0, 0.15),
+    inset 0 20px 10px rgba(255, 255, 255, 0.12), 0 0 4px 1px rgba(0, 0, 0, 0.1),
+    0 3px 2px rgba(0, 0, 0, 0.2);
+  padding: 8px;
   &__input {
+    flex-grow: 1;
     height: 40px;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-radius: 0;
+    color: white;
     border: none;
     outline: none;
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
       sans-serif;
     font-size: 16px;
-    padding: 8px 8px;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
-    transition: all 0.3s ease-out;
+    padding: 8px 16px;
 
-    &:focus {
-      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
-    }
+    background: #818181;
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.5),
+      inset 0 -4px 8px rgba(0, 0, 0, 0.5);
+
     &:placeholder {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 16px;
     }
+  }
+  &__form {
+    display: flex;
+  }
+  &__submit {
+    width: 20%;
+    border: none;
+    height: 40px;
+    background-image: linear-gradient(to bottom, #818181, #555);
+    color: white;
   }
   &__bottom-buttons {
     margin-top: auto;
@@ -195,12 +211,14 @@ export default {
   }
   &__results {
     padding: 1.5em 0;
+    flex-shrink: 1;
   }
 }
 .thumbnails {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  align-content: center;
 }
 </style>
 
