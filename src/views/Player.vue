@@ -12,9 +12,8 @@
         </div>
         <div class="player__widget" :class="{visible: showWidget}">
           <div class="player__buttons">
-            <button v-if="!paused" class="player__pause" @click="player.pause()">&#10073;&#10073;</button>
-            <button v-if="paused" class="player__play" @click="player.play()">&#9658;</button>
-            
+            <button v-if="!paused" class="player__pause player__button" @click="player.pause()">&#10073;&#10073;</button>
+            <button v-if="paused" class="player__play player__button" @click="player.play()">&#9658;</button>            
           </div>
           
           <div class="player__progress progress">
@@ -24,6 +23,11 @@
               <span v-html="duration" class="player__duration"></span>
             </div>
           </div>
+          <div class="player__button player__volume">
+            &#128266;
+            <input type="range" class="player__volume-slider" v-model.number="volume" @input="changeVolume" min="1" max="10">
+          </div>
+
         </div>
       </div>
     </transition>
@@ -48,7 +52,8 @@ export default {
       player: {},
       totalDuration: "",
       timeNow: "",
-      paused: true
+      paused: true,
+      volume: 10
     };
   },
   mounted() {},
@@ -59,10 +64,14 @@ export default {
       }?client_id=${CLIENT_ID}`;
     },
     trackImage() {
-      return this.$store.state.playerData.artwork_url.replace(
-        "large",
-        "t300x300"
-      );
+      if (this.$store.state.playerData.artwork_url.includes("large")) {
+        return this.$store.state.playerData.artwork_url.replace(
+          "large",
+          "t300x300"
+        );
+      } else {
+        return this.$store.state.playerData.artwork_url;
+      }
     },
     trackTitle() {
       return this.$store.state.playerData.title;
@@ -105,6 +114,9 @@ export default {
           this.animationStageOne = false;
         }, 200);
       }
+    },
+    changeVolume() {
+      this.player.volume = this.volume / 10;
     },
     _playerHandler() {
       if (this.player.readyState >= 2) {
@@ -167,13 +179,13 @@ export default {
   }
   &__image-wrapper {
     height: 85%;
-    border-radius: 20px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: white;
     padding: 10px;
-    z-index: 8;
+    // z-index: 8;
     box-shadow: inset 0 3px 2px rgba(255, 255, 255, 0.22),
       inset 0 -3px 2px rgba(0, 0, 0, 0.17),
       inset 0 20px 10px rgba(255, 255, 255, 0.12),
@@ -216,8 +228,7 @@ export default {
     display: inline-block;
     height: 20px;
   }
-  &__play,
-  &__pause {
+  &__button {
     width: 24px;
     height: 20px;
     outline: none;
@@ -232,9 +243,62 @@ export default {
       inset 0 -3px 2px rgba(0, 0, 0, 0.15),
       inset 0 20px 10px rgba(255, 255, 255, 0.12),
       0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  &__play,
+  &__pause {
     position: absolute;
     top: 0;
     left: 0;
+  }
+  &__volume {
+    position: relative;
+  }
+  &__volume-slider {
+    width: 100px;
+    height: 6px;
+    transform: rotate(-90deg);
+    transform-origin: left bottom;
+    position: absolute;
+    left: 60%;
+    bottom: 98%;
+    z-index: 5;
+    appearance: none;
+    outline: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: white;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2),
+      inset 0 3px 2px rgba(255, 255, 255, 0.22),
+      inset 0 -3px 2px rgba(0, 0, 0, 0.15),
+      inset 0 20px 10px rgba(255, 255, 255, 0.12),
+      0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
+    // background: linear-gradient(to top, #818181, #000);
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #b6ffc1;
+      cursor: pointer;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2),
+        inset 0 3px 2px rgba(255, 255, 255, 0.22),
+        inset 0 -3px 2px rgba(0, 0, 0, 0.15), inset -1px -1px 2px #50b561,
+        inset 0 20px 10px rgba(255, 255, 255, 0.12),
+        0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    &::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #b6ffc1;
+      cursor: pointer;
+    }
+    // visibility: hidden;
   }
   &__duration {
     color: black;

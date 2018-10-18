@@ -1,5 +1,5 @@
 <template>
-  <div class="search-result" :class="{thumbnails__item: thumbnails}">
+  <li class="search-result" :class="{thumbnails__item: thumbnails}">
     <a class="search-result__link" href="" @click.prevent="chooseTrack" :class="{thumbnails__link: thumbnails}">
       <h3 class="search-result__title" :class="{thumbnails__title: thumbnails}" >
         {{searchResult.title}}
@@ -7,7 +7,7 @@
       <img class="thumbnails__img" v-if="thumbnails" :src="image" alt="result thumbnail">
     </a>
    
-  </div>
+  </li>
 </template>
 
 <script>

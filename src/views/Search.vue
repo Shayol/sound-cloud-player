@@ -8,9 +8,9 @@
       </button>
     </form>
 
-    <ul class="search__results" :class="{thumbnails: thumbnails}">
+    <ol class="search__results" :class="{thumbnails: thumbnails}">
       <SearchResult v-for="item in pageResults" :key="item.id" :search-result="item"/>
-    </ul>
+    </ol>
     
     <div class="search__bottom-buttons">
         <svg v-if="!lastPage" @click="nextPage" class="search__next search__bottom-button" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -118,7 +118,7 @@ export default {
     inset 0 -3px 2px rgba(0, 0, 0, 0.15),
     inset 0 20px 10px rgba(255, 255, 255, 0.12), 0 0 4px 1px rgba(0, 0, 0, 0.1),
     0 3px 2px rgba(0, 0, 0, 0.2);
-  padding: 8px;
+
   &__input {
     flex-grow: 1;
     height: 40px;
@@ -154,6 +154,7 @@ export default {
   &__bottom-buttons {
     margin-top: auto;
     display: flex;
+    padding: 0.5em;
   }
 
   &__next {
@@ -211,7 +212,7 @@ export default {
     }
   }
   &__results {
-    padding: 1.5em 0;
+    padding: 1.5em 0.5em;
     flex-shrink: 1;
   }
 }
