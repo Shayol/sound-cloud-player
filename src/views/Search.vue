@@ -9,7 +9,7 @@
     </form>
 
     <ol class="search__results" :class="{thumbnails: thumbnails}">
-      <SearchResult v-for="(item,index) in pageResults" :index="index" :key="item.id" :search-result="item"/>
+      <SearchResult v-for="(item,index) in pageResults" :index="index" :page="page" :key="item.id" :search-result="item"/>
     </ol>
     
     <div class="search__bottom-buttons">

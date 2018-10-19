@@ -21,7 +21,8 @@ export default new Vuex.Store({
       artwork_url: './soundcloud-logo.jpg'
     },
     displayThumbnails: false,
-    default_img: './soundcloud-logo.jpg'
+    default_img: './soundcloud-logo.jpg',
+    page_size: 6
   },
   mutations: {
     updateQuery(state, payload) {

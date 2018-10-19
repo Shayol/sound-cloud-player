@@ -2,7 +2,7 @@
   <li class="search-result" :class="{thumbnails__item: thumbnails}">
     <a class="search-result__link" href="" @click.prevent="chooseTrack" :class="{thumbnails__link: thumbnails}">
       <h3 class="search-result__title" :class="{thumbnails__title: thumbnails}" >
-        <span class="search-result__index" :class="{invisible: thumbnails}">{{index + 1}}.</span> {{searchResult.title}}
+        <span class="search-result__index" :class="{invisible: thumbnails}">{{itemIndex}}.</span> {{searchResult.title}}
       </h3>
       <img class="thumbnails__img" v-if="thumbnails" :src="image" alt="result thumbnail">
     </a>
@@ -13,7 +13,7 @@
 <script>
 export default {
   name: "SearchResult",
-  props: ["searchResult", "index"],
+  props: ["searchResult", "index", "page"],
   computed: {
     thumbnails() {
       return this.$store.state.displayThumbnails;
@@ -22,6 +22,9 @@ export default {
       return this.searchResult.artwork_url
         ? this.searchResult.artwork_url
         : this.$store.state.default_img;
+    },
+    itemIndex() {
+      return this.page * this.$store.state.page_size + this.index + 1;
     }
   },
   methods: {
@@ -50,7 +53,8 @@ export default {
 .thumbnails {
   &__item {
     flex-basis: auto;
-    flex-shrink: 1;
+    min-height: 100px;
+    min-width: 100px;
     padding: 3px;
     background-color: white;
     @include box-shadow;
@@ -63,7 +67,9 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   &__title {
     font-size: 8px;
