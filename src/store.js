@@ -39,7 +39,8 @@ export default new Vuex.Store({
     updatePage(state) {
       state.page++;
     },
-    updatePlayer(state, { title, stream_url, artwork_url = './soundcloud-logo.jpg' }) {
+    updatePlayer(state, { title, stream_url, artwork_url }) {
+      artwork_url = artwork_url || state.default_img;
       state.playerData = {
         title,
         stream_url,
