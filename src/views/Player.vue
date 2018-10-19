@@ -7,8 +7,29 @@
         <h2  class="player__track-title">{{trackTitle}}</h2>
       </div>
       <div v-else class="player__content" key="image">
-        <div class="player__image-wrapper"  @click="showWidget=true">
+        <div class="player__image-wrapper" :class="{'player__image-wrapper--inactive': paused}" @click="showWidget=true">
+
           <img :src="trackImage" alt="track image" class="player__image">
+          <svg version="1.1" @click="player.play()" :class="{visible: paused}" class="player__play-overlay" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+        <g>
+          <g>
+            <g id="circle_18_">
+              <g>
+                <path d="M32,0C14.3,0,0,14.3,0,32s14.3,32,32,32s32-14.3,32-32S49.7,0,32,0z M32,62C15.4,62,2,48.6,2,32C2,15.4,15.4,2,32,2
+                  s30,13.4,30,30C62,48.6,48.6,62,32,62z"/>
+              </g>
+            </g>
+            <g id="play">
+              <g>
+                <path d="M41.1,30.3l-12-8c-0.6-0.4-1.4-0.4-2.1-0.1c-0.7,0.3-1.1,1-1.1,1.8v16c0,0.7,0.4,1.4,1.1,1.8c0.6,0.3,1.4,0.3,2.1-0.1
+                  l12-8c0.6-0.4,0.9-1,0.9-1.7C42,31.3,41.7,30.7,41.1,30.3z M38.8,33.4l-9.4,5.8c-0.5,0.3-1.4,0.4-1.4,0.4s0-0.9,0-1.5V26
+                  c0-0.6,0-1.7,0-1.7s0.9,0,1.4,0.3l9.4,6.2c0.5,0.3,0.7,0.7,0.7,1.2C39.5,32.6,39.3,33.1,38.8,33.4z"/>
+              </g>
+            </g>
+          </g>
+        </g>
+        </svg>
         </div>
         <div class="player__widget" :class="{'widget-visible': showWidget}">
           <div class="player__buttons">
@@ -50,7 +71,7 @@ export default {
       animationStageOne: false,
       showWidget: false,
       showVolume: false,
-      player: {},
+      player: { play() {}, pause() {} },
       totalDuration: "",
       timeNow: "",
       paused: true,
@@ -96,6 +117,7 @@ export default {
     showWidget: function(value) {
       if (value && this.streamURL) {
         let player = new Audio(this.streamURL);
+        this.player.pause();
         this.player = player;
 
         this.player.addEventListener("loadeddata", this._playerHandler);
@@ -182,6 +204,7 @@ export default {
   }
   &__image-wrapper {
     border-radius: 8px;
+    position: relative;
     height: 85%;
     min-height: 316px;
     display: flex;
@@ -194,8 +217,18 @@ export default {
       inset 0 -20px 10px rgba(255, 255, 255, 0.12),
       0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2),
       0 -3px 2px rgba(0, 0, 0, 0.2);
-    // margin-bottom: 10px;
     cursor: pointer;
+
+    &\--inactive::after {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      content: "";
+      top: 0;
+      left: 0;
+      background-color: whitesmoke;
+      opacity: 0.5;
+    }
   }
   &__image {
     height: auto;
@@ -203,6 +236,18 @@ export default {
     max-height: 300px;
     width: 100%;
     display: block;
+  }
+  &__play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    height: 20%;
+    content: "";
+    display: none;
+    z-index: 10;
+    // filter: drop-shadow(-2px -2px 5px #000);
   }
   &__widget {
     position: absolute;
@@ -273,12 +318,12 @@ export default {
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      background: #b6ffc1;
+      background: $green-light;
       cursor: pointer;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
         0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2),
         inset 0 3px 2px rgba(255, 255, 255, 0.22),
-        inset 0 -3px 2px rgba(0, 0, 0, 0.15), inset -1px -1px 2px #50b561,
+        inset 0 -3px 2px rgba(0, 0, 0, 0.15), inset -1px -1px 2px $green-dark,
         inset 0 20px 10px rgba(255, 255, 255, 0.12),
         0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
     }
