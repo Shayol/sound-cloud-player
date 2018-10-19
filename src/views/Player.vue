@@ -159,7 +159,9 @@ export default {
     justify-content: center;
     align-items: center;
     z-index: 10;
-    height: 100%;
+    height: 85%;
+    min-height: 316px;
+    padding: 8px;
   }
   &__track-title {
     font-size: 26px;
@@ -180,18 +182,20 @@ export default {
   }
   &__image-wrapper {
     border-radius: 8px;
-    height: 80%;
+    height: 85%;
+    min-height: 316px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: white;
-    padding: 10px;
-    // z-index: 8;
+    padding: 8px;
     box-shadow: inset 0 3px 2px rgba(255, 255, 255, 0.22),
-      inset 0 -3px 2px rgba(0, 0, 0, 0.17),
-      inset 0 20px 10px rgba(255, 255, 255, 0.12),
-      0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
-    margin-bottom: 10px;
+      inset 0 -2px 1px rgba(0, 0, 0, 0.17), inset 0 3px 2px rgba(0, 0, 0, 0.17),
+      inset 0 -20px 10px rgba(255, 255, 255, 0.12),
+      0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2),
+      0 -3px 2px rgba(0, 0, 0, 0.2);
+    // margin-bottom: 10px;
+    cursor: pointer;
   }
   &__image {
     height: auto;
@@ -208,12 +212,7 @@ export default {
     align-items: center;
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.5);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
-      0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2),
-      inset 0 3px 2px rgba(255, 255, 255, 0.22),
-      inset 0 -3px 2px rgba(0, 0, 0, 0.15),
-      inset 0 20px 10px rgba(255, 255, 255, 0.12),
-      0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
+    @include box-shadow;
     position: absolute;
     padding: 0 8px;
   }
@@ -238,12 +237,7 @@ export default {
     border-radius: 5px;
     text-align: center;
     background-color: white;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
-      0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2),
-      inset 0 3px 2px rgba(255, 255, 255, 0.22),
-      inset 0 -3px 2px rgba(0, 0, 0, 0.15),
-      inset 0 20px 10px rgba(255, 255, 255, 0.12),
-      0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
+    @include box-shadow;
     cursor: pointer;
   }
 
@@ -258,26 +252,20 @@ export default {
     margin-left: 8px;
   }
   &__volume-slider {
-    visibility: hidden;
+    display: none;
     width: 100px;
     height: 6px;
     transform: rotate(-90deg);
     transform-origin: left bottom;
     position: absolute;
     left: 60%;
-    bottom: 98%;
-    z-index: 5;
+    bottom: 99%;
     appearance: none;
     outline: none;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     background-color: white;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
-      0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2),
-      inset 0 3px 2px rgba(255, 255, 255, 0.22),
-      inset 0 -3px 2px rgba(0, 0, 0, 0.15),
-      inset 0 20px 10px rgba(255, 255, 255, 0.12),
-      0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
+    @include box-shadow;
 
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
@@ -366,7 +354,7 @@ export default {
 }
 
 .visible {
-  visibility: visible;
+  display: block;
 }
 
 .player__content.fade-enter-active {

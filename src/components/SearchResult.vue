@@ -2,7 +2,7 @@
   <li class="search-result" :class="{thumbnails__item: thumbnails}">
     <a class="search-result__link" href="" @click.prevent="chooseTrack" :class="{thumbnails__link: thumbnails}">
       <h3 class="search-result__title" :class="{thumbnails__title: thumbnails}" >
-        {{searchResult.title}}
+        <span class="search-result__index" :class="{invisible: thumbnails}">{{index + 1}}.</span> {{searchResult.title}}
       </h3>
       <img class="thumbnails__img" v-if="thumbnails" :src="image" alt="result thumbnail">
     </a>
@@ -13,7 +13,7 @@
 <script>
 export default {
   name: "SearchResult",
-  props: ["searchResult"],
+  props: ["searchResult", "index"],
   computed: {
     thumbnails() {
       return this.$store.state.displayThumbnails;
@@ -36,19 +36,24 @@ export default {
 <style lang="scss">
 .search-result {
   &__title {
-    line-height: 2;
+    line-height: 1.5;
+    margin-bottom: 16px;
     font-size: 12px;
     color: black;
-    text-decoration-color: #0044cc;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  &__link {
+    text-decoration: none;
   }
 }
 .thumbnails {
   &__item {
     flex-basis: auto;
     flex-shrink: 1;
-    margin-bottom: 6%;
+    padding: 3px;
     background-color: white;
-    box-shadow: 2px 2px 6px #000;
+    @include box-shadow;
     &:hover {
       transform: scale(1.05);
     }
@@ -63,6 +68,7 @@ export default {
   &__title {
     font-size: 8px;
     padding-top: 4px;
+    padding-bottom: 4px;
     font-weight: bold;
     text-align: center;
     line-height: 1.2;
@@ -81,5 +87,8 @@ export default {
     height: auto;
     max-height: 100px;
   }
+}
+.invisible {
+  display: none;
 }
 </style>

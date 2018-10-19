@@ -1,9 +1,9 @@
 <template>
   <div id="app" class="container">
   <div class="page">
-    <router-view class="page__search"></router-view>
-    <router-view class="page__player" name="player"></router-view>
-    <router-view class="page__history" name="history"></router-view>
+    <router-view class="page__search page__item"></router-view>
+    <router-view class="page__player page__item" name="player"></router-view>
+    <router-view class="page__history page__item" name="history"></router-view>
   </div>
     
   </div>
@@ -12,6 +12,7 @@
 <style lang="scss">
 .container {
   height: 100vh;
+  min-width: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,17 +25,32 @@
   max-height: 600px;
   padding: 2%;
   display: flex;
+  flex-wrap: wrap;
 
   justify-content: space-between;
-  &__search {
-    flex-basis: 30%;
+  &__item {
+    flex-basis: 100%;
+    margin-bottom: 10%;
   }
-  &__player {
-    flex-basis: 30%;
-    flex-grow: 0;
+
+  @media (min-width: $tablet) {
+    justify-content: space-around;
+    &__search {
+      flex-basis: 50%;
+    }
+    &__player {
+      flex-basis: 40%;
+      flex-grow: 0;
+    }
+    &__history {
+      flex-basis: 100%;
+    }
   }
-  &__history {
-    flex-basis: 30%;
+  @media (min-width: $desktop) {
+    &__item {
+      flex-basis: 30%;
+      margin-bottom: 0;
+    }
   }
 }
 </style>

@@ -9,7 +9,7 @@
     </form>
 
     <ol class="search__results" :class="{thumbnails: thumbnails}">
-      <SearchResult v-for="item in pageResults" :key="item.id" :search-result="item"/>
+      <SearchResult v-for="(item,index) in pageResults" :index="index" :key="item.id" :search-result="item"/>
     </ol>
     
     <div class="search__bottom-buttons">
@@ -126,12 +126,7 @@ export default {
 .search {
   display: flex;
   flex-direction: column;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2),
-    inset 0 3px 2px rgba(255, 255, 255, 0.22),
-    inset 0 -3px 2px rgba(0, 0, 0, 0.15),
-    inset 0 20px 10px rgba(255, 255, 255, 0.12), 0 0 4px 1px rgba(0, 0, 0, 0.1),
-    0 3px 2px rgba(0, 0, 0, 0.2);
+  @include box-shadow;
 
   &__input {
     flex-grow: 1;
@@ -143,7 +138,7 @@ export default {
     font-size: 16px;
     padding: 8px 16px;
 
-    opacity: 0.7;
+    opacity: 0.8;
     &:focus {
       opacity: 1;
       ~ .search__submit {
@@ -170,7 +165,7 @@ export default {
     height: 40px;
     background-image: linear-gradient(to bottom, #818181, #555);
     color: white;
-    opacity: 0.7;
+    opacity: 0.8;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
   &__bottom-buttons {
@@ -187,12 +182,7 @@ export default {
     width: 40px;
     height: 20px;
     background-color: rgba(255, 255, 255, 0.5);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
-      0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2),
-      inset 0 3px 2px rgba(255, 255, 255, 0.22),
-      inset 0 -3px 2px rgba(0, 0, 0, 0.15),
-      inset 0 20px 10px rgba(255, 255, 255, 0.12),
-      0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
+    @include box-shadow;
     &:active {
       transform: scale(1.1);
     }
@@ -237,7 +227,7 @@ export default {
     }
   }
   &__results {
-    padding: 1.5em 0.5em;
+    padding: 1em;
   }
 }
 .thumbnails {
@@ -245,6 +235,13 @@ export default {
   flex-wrap: wrap;
   justify-content: space-around;
   align-content: center;
+  height: calc(90% - 64px);
+  align-content: space-between;
+}
+@media (min-width: $tablet) {
+  &__results {
+    padding: 1.5em 1em 0 1em;
+  }
 }
 </style>
 
