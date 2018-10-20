@@ -24,9 +24,9 @@
               <span v-html="duration" class="player__duration"></span>
             </div>
           </div>
-          <div @click.self="showVolume = !showVolume" class="player__button player__volume">
+          <div @mousedown.self.prevent="showVolume = !showVolume" class="player__button player__volume">
             &#128266;
-            <input type="range" class="player__volume-slider" :class="{'visible': showVolume}" v-model.number="volume" @input="changeVolume" min="1" max="10">
+            <input type="range" ref="volume" class="player__volume-slider" :class="{'visible': showVolume}" v-model.number="volume" @input="changeVolume" @blur="showVolume = false" min="1" max="10">
           </div>
 
         </div>
@@ -98,7 +98,7 @@ export default {
       if (value && this.streamURL) {
         if (this.player.src) {
           this.player.src = this.streamURL;
-          this.player.load;
+          this.player.load();
         } else {
           let player = new Audio(this.streamURL);
           this.player = player;
@@ -111,6 +111,11 @@ export default {
     trackTitle: function() {
       this.animationStageOne = true;
       this.showWidget = false;
+    },
+    showVolume: function(value) {
+      if (value) {
+        this.$nextTick(() => this.$refs.volume.focus());
+      }
     }
   },
   methods: {
@@ -123,6 +128,10 @@ export default {
     },
     changeVolume() {
       this.player.volume = this.volume / 10;
+    },
+    hideVolume(e) {
+      console.log(e.target);
+      this.showVolume = false;
     },
     _playerHandler() {
       if (this.player.readyState >= 2) {
