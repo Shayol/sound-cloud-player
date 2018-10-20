@@ -56,9 +56,9 @@
 }
 @media (min-width: $desktop) {
   .page {
-    max-height: 600px;
     &__item {
       flex-basis: 30%;
+      min-height: 500px;
       margin-bottom: 0;
     }
   }

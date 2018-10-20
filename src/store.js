@@ -57,11 +57,13 @@ export default new Vuex.Store({
       state.page = 1;
     },
     updateHistory(state) {
-      state.history.unshift(state.query);
-      if (state.history.length > HISTORY_SIZE) {
-        state.history.pop();
+      if (state.history.indexOf(state.query) == -1) {
+        state.history.unshift(state.query);
+        if (state.history.length > HISTORY_SIZE) {
+          state.history.pop();
+        }
+        localStorage.setItem("history", JSON.stringify(state.history));
       }
-      localStorage.setItem("history", JSON.stringify(state.history));
     },
     updateNotFound(state, payload) {
       state.notFound = payload.value;

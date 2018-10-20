@@ -23,9 +23,24 @@
               <span v-html="currentTime" class="player__current-time"></span> 
               <span v-html="duration" class="player__duration"></span>
             </div>
+            <input type="range" @input="setTime($event)"  class="progress__slider" :max="totalDuration" min="0">
           </div>
           <div @mousedown.self.prevent="showVolume = !showVolume" class="player__button player__volume">
-            &#128266;
+            <svg version="1.1" class="player__volume-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	            viewBox="0 0 31.2 28.3" style="enable-background:new 0 0 31.2 28.3;" xml:space="preserve">
+            <g>
+              <g id="c75_volume">
+                <path class="st0" d="M4.4,9.3H0V19h4.4l8.2,6.1c0,0,1.5,1.3,1.5,0c0-1.3,0-20.9,0-22.1c0-1-1.3,0-1.3,0L4.4,9.3z"/>
+                <path class="st0" d="M18.8,7.4c-0.4-0.4-1.1-0.4-1.6,0c-0.4,0.4-0.4,1.1,0,1.6c1.4,1.4,2.1,3.3,2.1,5.2c0,1.9-0.7,3.7-2.1,5.2
+                  c-0.4,0.4-0.4,1.1,0,1.6c0.2,0.2,0.5,0.3,0.8,0.3c0.3,0,0.6-0.1,0.8-0.3c1.9-1.9,2.8-4.3,2.8-6.7C21.6,11.7,20.7,9.3,18.8,7.4z"/>
+                <path class="st0" d="M21.8,3.9c-0.4-0.4-1.1-0.4-1.6,0c-0.4,0.4-0.4,1.1,0,1.6c2.4,2.4,3.6,5.5,3.6,8.7c0,3.2-1.2,6.3-3.6,8.7
+                  c-0.4,0.4-0.4,1.1,0,1.6c0.2,0.2,0.5,0.3,0.8,0.3c0.3,0,0.6-0.1,0.8-0.3c2.8-2.8,4.2-6.6,4.2-10.3C26.1,10.4,24.6,6.7,21.8,3.9z"
+                  />
+                <path class="st0" d="M25.5,0.3c-0.4-0.4-1.1-0.4-1.6,0c-0.4,0.4-0.4,1.1,0,1.6C27.3,5.3,29,9.7,29,14.1c0,4.4-1.7,8.9-5.1,12.3
+                  c-0.4,0.4-0.4,1.1,0,1.6c0.2,0.2,0.5,0.3,0.8,0.3c0.3,0,0.6-0.1,0.8-0.3c3.8-3.8,5.7-8.8,5.7-13.8C31.2,9.1,29.3,4.1,25.5,0.3z"/>
+              </g>
+            </g>
+            </svg>
             <input type="range" ref="volume" class="player__volume-slider" :class="{'visible': showVolume}" v-model.number="volume" @input="changeVolume" @blur="showVolume = false" min="1" max="10">
           </div>
 
@@ -53,7 +68,7 @@ export default {
       showVolume: false,
       player: { play() {}, pause() {} },
       totalDuration: "",
-      timeNow: "",
+      timeNow: 0,
       paused: true,
       volume: 10
     };
@@ -133,6 +148,9 @@ export default {
       console.log(e.target);
       this.showVolume = false;
     },
+    setTime(e) {
+      this.player.currentTime = e.target.value;
+    },
     _playerHandler() {
       if (this.player.readyState >= 2) {
         this.player.addEventListener("pause", () => {
@@ -197,7 +215,7 @@ export default {
   &__image-wrapper {
     border-radius: 8px;
     position: relative;
-    height: 85%;
+    height: 75%;
     min-height: 316px;
     display: flex;
     align-items: center;
@@ -232,7 +250,7 @@ export default {
   &__widget {
     position: absolute;
     visibility: hidden;
-    height: 40px;
+    height: 56px;
     display: flex;
     align-items: center;
     border-radius: 8px;
@@ -240,6 +258,7 @@ export default {
     @include box-shadow;
     position: absolute;
     padding: 0 8px;
+    margin-top: 16px;
   }
   &__progress {
     height: 20px;
@@ -247,15 +266,15 @@ export default {
   }
   &__buttons {
     position: relative;
-    width: 24px;
+    width: 40px;
     height: 100%;
-    margin-right: 8px;
+    margin-right: 12px;
     display: inline-block;
-    height: 20px;
+    height: 32px;
   }
   &__button {
-    width: 24px;
-    height: 20px;
+    width: 40px;
+    height: 32px;
     outline: none;
     border: none;
     display: inline-block;
@@ -274,7 +293,14 @@ export default {
   }
   &__volume {
     position: relative;
-    margin-left: 8px;
+    margin-left: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__volume-icon {
+    width: 24px;
+    pointer-events: none;
   }
   &__volume-slider {
     display: none;
@@ -370,6 +396,16 @@ export default {
     position: relative;
     overflow: hidden;
   }
+  &__slider {
+    position: absolute;
+    top: 0;
+    left: 6px;
+    right: 6px;
+    height: 20px;
+    width: calc(100% - 12px);
+    opacity: 0;
+    z-index: 4;
+  }
 }
 .widget-visible {
   position: static;
@@ -391,13 +427,6 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-}
-
-.st0 {
-  fill: #ffffff;
-}
-.st1 {
-  fill: #000;
 }
 </style>
 

@@ -139,7 +139,7 @@ export default {
 
   &__input {
     flex-grow: 1;
-    height: 40px;
+    height: 56px;
     border-radius: 0;
     color: white;
     border: none;
@@ -171,7 +171,7 @@ export default {
   &__submit {
     width: 20%;
     border: none;
-    height: 40px;
+    height: 56px;
     background-image: linear-gradient(to bottom, #818181, #555);
     color: white;
     opacity: 0.8;
@@ -180,16 +180,15 @@ export default {
   &__bottom-buttons {
     margin-top: auto;
     display: flex;
-    padding: 0.5em;
+    padding: 1em;
   }
 
   &__nav {
-    font-size: 25px;
     outline: none;
     border: 0;
     position: relative;
-    width: 40px;
-    height: 20px;
+    width: 60px;
+    height: 32px;
     background-color: rgba(255, 255, 255, 0.5);
     @include box-shadow;
     &:active {
@@ -204,11 +203,11 @@ export default {
     display: flex;
   }
   &__display-list {
-    height: 20px;
+    height: 32px;
   }
   &__display-thumbnails {
-    width: 20px;
-    height: 20px;
+    width: 32px;
+    height: 32px;
     background-color: black;
     position: relative;
     margin-left: 8px;
@@ -247,13 +246,34 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  align-content: center;
-  height: calc(90% - 64px);
+  height: calc(100% - 110px);
   align-content: space-between;
 }
 @media (min-width: $tablet) {
   .search {
     @include box-shadow;
+
+    &__input {
+      height: 40px;
+    }
+    &__submit {
+      height: 40px;
+    }
+  }
+}
+@media (min-width: $desktop) {
+  .search {
+    // &__nav {
+    //   height: 20px;
+    //   width: 40px;
+    // }
+    // &__display-list {
+    //   height: 20px;
+    // }
+    // &__display-thumbnails {
+    //   width: 20px;
+    //   height: 20px;
+    // }
   }
 }
 </style>
