@@ -10,14 +10,6 @@
         <div class="player__image-wrapper" :class="{'player__image-wrapper--inactive': paused}" @click="showWidget=true">
 
           <img :src="trackImage" alt="track image" class="player__image">
-          <svg version="1.1" @click="player.play()" :class="{visible: paused}" class="player__play-overlay"
-            id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 500 350" xml:space="preserve">
-          <path id="YouTube__x28_alt_x29_" inkscape:connector-curvature="0" class="st0" d="M500,74.8C500,33.5,466.5,0,425.3,0H74.7
-            C33.5,0,0,33.5,0,74.8v200.5C0,316.5,33.5,350,74.7,350h350.6c41.3,0,74.7-33.5,74.7-74.8V74.8z M200,259.6V71.3l142.8,94.2
-            L200,259.6z"/>
-          <path id="path3753" inkscape:connector-curvature="0" sodipodi:nodetypes="cccc" class="st1" d="M199.9,71.1l0.1,188.5l143-94.2
-            L199.9,71.1z"/>
-          </svg>
         </div>
         <div class="player__widget" :class="{'widget-visible': showWidget}">
           <div class="player__buttons">
@@ -227,18 +219,6 @@ export default {
     max-height: 300px;
     width: 100%;
     display: block;
-  }
-  &__play-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20%;
-    height: 20%;
-    content: "";
-    display: none;
-    z-index: 10;
-    // filter: drop-shadow(-2px -2px 5px #000);
   }
   &__widget {
     position: absolute;

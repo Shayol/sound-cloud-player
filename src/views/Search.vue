@@ -2,7 +2,7 @@
   <div class="search">
     
     <form action="" @submit.prevent="searchTrack" class="search__form">
-      <input placeholder="Search..." spellcheck="false" type="text" v-model="query" class="search__input">
+      <input placeholder="Search..." spellcheck="false" type="text" v-model.trim="query" class="search__input">
       <button type="submit" class="search__submit">
         Go
       </button>
@@ -99,7 +99,9 @@ export default {
   },
   methods: {
     searchTrack() {
-      this.$store.dispatch("searchTrack");
+      if (this.query) {
+        this.$store.dispatch("searchTrack");
+      }
     },
     nextPage() {
       if (

@@ -16,7 +16,7 @@ export default {
   name: "History",
   components: {},
   created() {
-    this.$store.commit("initializeHistory");
+    this.$store.commit("initializeDisplayThumbnails");
   },
   computed: {
     searchHistory() {

@@ -11,23 +11,25 @@
 
 <style lang="scss">
 .container {
-  height: 100vh;
+  height: 100%;
   min-width: 320px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 .page {
   max-width: 960px;
   width: 100%;
-  height: 100%;
   min-height: 500px;
-  max-height: 600px;
-  padding: 2%;
+
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
 
   justify-content: space-between;
+  &__search {
+    flex-shrink: 0;
+  }
   &__item {
     flex-basis: 100%;
     margin-bottom: 10%;
@@ -35,6 +37,7 @@
 
   @media (min-width: $tablet) {
     justify-content: space-around;
+
     &__search {
       flex-basis: 50%;
     }
@@ -47,6 +50,7 @@
     }
   }
   @media (min-width: $desktop) {
+    max-height: 600px;
     &__item {
       flex-basis: 30%;
       margin-bottom: 0;
