@@ -21,7 +21,6 @@
   max-width: 960px;
   width: 100%;
   min-height: 500px;
-
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -34,8 +33,13 @@
     flex-basis: 100%;
     margin-bottom: 10%;
   }
+}
 
-  @media (min-width: $tablet) {
+@media (min-width: $tablet) {
+  .container {
+    padding-top: 4%;
+  }
+  .page {
     justify-content: space-around;
 
     &__search {
@@ -49,7 +53,9 @@
       flex-basis: 100%;
     }
   }
-  @media (min-width: $desktop) {
+}
+@media (min-width: $desktop) {
+  .page {
     max-height: 600px;
     &__item {
       flex-basis: 30%;

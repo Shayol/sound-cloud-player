@@ -8,10 +8,15 @@
       </button>
     </form>
 
+    <p v-show="notFound" class="search__not-found">
+      Not found
+    </p>
+
     <ol class="search__results" :class="{thumbnails: thumbnails}">
       <SearchResult v-for="(item,index) in pageResults" :index="index" :page="page" :key="item.id" :search-result="item"/>
     </ol>
     
+
     <div class="search__bottom-buttons">
         
         <svg v-if="page > 0" @click="prevPage" class="search__prev search__bottom-button search__nav"  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -57,7 +62,7 @@
 
 <script>
 // @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
+
 import SearchResult from "@/components/SearchResult";
 export default {
   name: "Search",
@@ -69,7 +74,7 @@ export default {
       page: 0
     };
   },
-  mounted() {
+  created() {
     this.$store.commit("initializeDisplayThumbnails");
   },
   computed: {
@@ -95,6 +100,9 @@ export default {
     },
     thumbnails() {
       return this.$store.state.displayThumbnails;
+    },
+    notFound() {
+      return this.$store.state.notFound;
     }
   },
   methods: {
@@ -128,7 +136,6 @@ export default {
 .search {
   display: flex;
   flex-direction: column;
-  @include box-shadow;
 
   &__input {
     flex-grow: 1;
@@ -231,6 +238,10 @@ export default {
   &__results {
     padding: 1em;
   }
+  &__not-found {
+    padding: 1em;
+    font-weight: bold;
+  }
 }
 .thumbnails {
   display: flex;
@@ -241,8 +252,8 @@ export default {
   align-content: space-between;
 }
 @media (min-width: $tablet) {
-  &__results {
-    padding: 1.5em 1em 0 1em;
+  .search {
+    @include box-shadow;
   }
 }
 </style>

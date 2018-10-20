@@ -22,7 +22,8 @@ export default new Vuex.Store({
     },
     displayThumbnails: false,
     default_img: './soundcloud-logo.jpg',
-    page_size: 6
+    page_size: 6,
+    notFound: false
   },
   mutations: {
     updateQuery(state, payload) {
@@ -62,11 +63,14 @@ export default new Vuex.Store({
       }
       localStorage.setItem("history", JSON.stringify(state.history));
     },
+    updateNotFound(state, payload) {
+      state.notFound = payload.value;
+    },
     initializeHistory(state) {
       state.history = JSON.parse(localStorage.getItem('history')) || [];
     },
     initializeDisplayThumbnails(state) {
-      state.displayThumbnails = (JSON.parse(localStorage.getItem('display-pref')) == 'true') || false;
+      state.displayThumbnails = JSON.parse(localStorage.getItem('display-pref')) || false;
     }
   },
   actions: {
@@ -83,6 +87,13 @@ export default new Vuex.Store({
         context.commit("updateResults", { collection: tracks.collection });
         context.commit('updateHistory');
         context.commit('clearPageCount');
+
+        if (!context.state.results.length) {
+          context.commit("updateNotFound", { value: true });
+        }
+        else {
+          context.commit("updateNotFound", { value: false });
+        }
 
         if (tracks.next_href) {
           context.commit("updateNextHref", { next_href: tracks.next_href });
