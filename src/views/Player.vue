@@ -10,26 +10,14 @@
         <div class="player__image-wrapper" :class="{'player__image-wrapper--inactive': paused}" @click="showWidget=true">
 
           <img :src="trackImage" alt="track image" class="player__image">
-          <svg version="1.1" @click="player.play()" :class="{visible: paused}" class="player__play-overlay" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-          viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
-        <g>
-          <g>
-            <g id="circle_18_">
-              <g>
-                <path d="M32,0C14.3,0,0,14.3,0,32s14.3,32,32,32s32-14.3,32-32S49.7,0,32,0z M32,62C15.4,62,2,48.6,2,32C2,15.4,15.4,2,32,2
-                  s30,13.4,30,30C62,48.6,48.6,62,32,62z"/>
-              </g>
-            </g>
-            <g id="play">
-              <g>
-                <path d="M41.1,30.3l-12-8c-0.6-0.4-1.4-0.4-2.1-0.1c-0.7,0.3-1.1,1-1.1,1.8v16c0,0.7,0.4,1.4,1.1,1.8c0.6,0.3,1.4,0.3,2.1-0.1
-                  l12-8c0.6-0.4,0.9-1,0.9-1.7C42,31.3,41.7,30.7,41.1,30.3z M38.8,33.4l-9.4,5.8c-0.5,0.3-1.4,0.4-1.4,0.4s0-0.9,0-1.5V26
-                  c0-0.6,0-1.7,0-1.7s0.9,0,1.4,0.3l9.4,6.2c0.5,0.3,0.7,0.7,0.7,1.2C39.5,32.6,39.3,33.1,38.8,33.4z"/>
-              </g>
-            </g>
-          </g>
-        </g>
-        </svg>
+          <svg version="1.1" @click="player.play()" :class="{visible: paused}" class="player__play-overlay"
+            id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 500 350" xml:space="preserve">
+          <path id="YouTube__x28_alt_x29_" inkscape:connector-curvature="0" class="st0" d="M500,74.8C500,33.5,466.5,0,425.3,0H74.7
+            C33.5,0,0,33.5,0,74.8v200.5C0,316.5,33.5,350,74.7,350h350.6c41.3,0,74.7-33.5,74.7-74.8V74.8z M200,259.6V71.3l142.8,94.2
+            L200,259.6z"/>
+          <path id="path3753" inkscape:connector-curvature="0" sodipodi:nodetypes="cccc" class="st1" d="M199.9,71.1l0.1,188.5l143-94.2
+            L199.9,71.1z"/>
+          </svg>
         </div>
         <div class="player__widget" :class="{'widget-visible': showWidget}">
           <div class="player__buttons">
@@ -116,10 +104,13 @@ export default {
   watch: {
     showWidget: function(value) {
       if (value && this.streamURL) {
-        let player = new Audio(this.streamURL);
-        this.player.pause();
-        this.player = player;
-
+        if (this.player.src) {
+          this.player.src = this.streamURL;
+          this.player.load;
+        } else {
+          let player = new Audio(this.streamURL);
+          this.player = player;
+        }
         this.player.addEventListener("loadeddata", this._playerHandler);
       } else {
         this.player.pause();
@@ -411,6 +402,13 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+.st0 {
+  fill: #ffffff;
+}
+.st1 {
+  fill: #000;
 }
 </style>
 
