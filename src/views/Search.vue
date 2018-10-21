@@ -2,7 +2,20 @@
   <div class="search">
     
     <form action="" @submit.prevent="searchTrack" class="search__form">
-      <input placeholder="Search..." spellcheck="false" type="text" v-model.trim="query" class="search__input">
+      <div class="search__input-wrapper">
+        <input placeholder="Search..." spellcheck="false" type="text" v-model.trim="query" class="search__input">
+        <svg class="search__delete" @click ="query=''" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            viewBox="0 0 13.5 15.3" style="enable-background:new 0 0 13.5 15.3;" xml:space="preserve">
+          <g>
+            <rect x="6.3" y="-1" transform="matrix(0.7572 -0.6532 0.6532 0.7572 -3.3576 6.2765)" width="1" height="17.4"/>
+            <polygon points="1.5,0 0,1.3 12,15.3 13.5,14 1.5,0 	"/>
+          </g>
+          <g>
+            <rect x="-1.9" y="7.2" transform="matrix(0.6477 -0.7619 0.7619 0.6477 -3.4491 7.8492)" width="17.4" height="1"/>
+            <polygon points="12,0 0,14 1.6,15.3 13.5,1.3 12,0 	"/>
+          </g>
+        </svg>
+      </div>
       <button type="submit" class="search__submit">
         Go
       </button>
@@ -140,22 +153,23 @@ export default {
   display: flex;
   flex-direction: column;
 
-  &__input {
+  &__input-wrapper {
     flex-grow: 1;
+    position: relative;
+  }
+
+  &__input {
     height: 56px;
     border-radius: 0;
     color: white;
     border: none;
     outline: none;
     font-size: 16px;
-    padding: 8px 16px;
+    padding: 8px 32px 8px 16px;
 
     opacity: 0.8;
     &:focus {
       opacity: 1;
-      ~ .search__submit {
-        opacity: 1;
-      }
     }
 
     background: #818181;
@@ -172,13 +186,28 @@ export default {
     display: flex;
   }
   &__submit {
-    width: 20%;
+    width: 25%;
+    position: relative;
     border: none;
     height: 56px;
     background-image: linear-gradient(to bottom, #818181, #555);
     color: white;
     opacity: 0.8;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  &__delete {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    padding: 4px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 100%;
+    fill: rgb(194, 8, 8);
+
+    z-index: 2;
   }
   &__bottom-buttons {
     margin-top: auto;
