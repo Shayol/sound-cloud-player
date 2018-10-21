@@ -281,9 +281,10 @@ export default {
   height: calc(100% - 110px);
   align-content: space-between;
 }
+
 @media (min-width: $tablet) {
   .search {
-    @include box-shadow;
+    // @include box-shadow;
 
     &__input {
       height: 40px;

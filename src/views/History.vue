@@ -33,7 +33,7 @@ export default {
 </script>
 <style lang="scss">
 .history {
-  @include box-shadow;
+  // @include box-shadow;
   padding: 1.5em 1em;
   &__header {
     font-size: 24px;
