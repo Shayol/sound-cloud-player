@@ -18,7 +18,8 @@ export default new Vuex.Store({
     playerData: {
       title: '',
       stream_url: '',
-      artwork_url: './soundcloud-logo.jpg'
+      artwork_url: './soundcloud-logo.jpg',
+      permalink_url: ""
     },
     displayThumbnails: false,
     default_img: './soundcloud-logo.jpg',
@@ -45,12 +46,13 @@ export default new Vuex.Store({
     updatePage(state, { value }) {
       state.page = value;
     },
-    updatePlayer(state, { title, stream_url, artwork_url }) {
+    updatePlayer(state, { title, stream_url, artwork_url, permalink_url }) {
       artwork_url = artwork_url || state.default_img;
       state.playerData = {
         title,
         stream_url,
-        artwork_url
+        artwork_url,
+        permalink_url
       };
     },
     updateDisplayThumbnails(state) {

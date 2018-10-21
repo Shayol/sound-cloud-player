@@ -12,10 +12,6 @@
           <img :src="trackImage" alt="track image" class="player__image">
         </div>
         <div class="player__widget" :class="{'widget-visible': showWidget}">
-          <div class="player__buttons">
-            <button v-if="!paused" class="player__pause player__button" @click="player.pause()">&#10073;&#10073;</button>
-            <button v-if="paused" class="player__play player__button" @click="player.play()">&#9658;</button>            
-          </div>
           
           <div class="player__progress progress">
             <div :style="{width: progress}" class="progress__bar"></div>
@@ -25,23 +21,53 @@
             </div>
             <input type="range" @input="setTime($event)"  class="progress__slider" :max="totalDuration" min="0">
           </div>
-          <div @mousedown.self.prevent="showVolume = !showVolume" class="player__button player__volume">
-            <svg version="1.1" class="player__volume-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	            viewBox="0 0 31.2 28.3" style="enable-background:new 0 0 31.2 28.3;" xml:space="preserve">
+
+          <div class="player__controls">
+            <div class="player__play-pause-buttons">
+              <button v-if="!paused" class="player__pause player__button" @click="player.pause()">&#10073;&#10073;</button>
+              <button v-if="paused" class="player__play player__button" @click="player.play()">&#9658;</button>            
+            </div>
+
+            <button @click="copyLink" class="player__button player__share">
+            <input type="text" ref="link" :value="trackURL" class="player__share-link" spellcheck="false"/>
+  
+            <svg class="player__share-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              viewBox="0 0 511.6 438.5" style="enable-background:new 0 0 511.6 438.5;" xml:space="preserve">
             <g>
-              <g id="c75_volume">
-                <path class="st0" d="M4.4,9.3H0V19h4.4l8.2,6.1c0,0,1.5,1.3,1.5,0c0-1.3,0-20.9,0-22.1c0-1-1.3,0-1.3,0L4.4,9.3z"/>
-                <path class="st0" d="M18.8,7.4c-0.4-0.4-1.1-0.4-1.6,0c-0.4,0.4-0.4,1.1,0,1.6c1.4,1.4,2.1,3.3,2.1,5.2c0,1.9-0.7,3.7-2.1,5.2
-                  c-0.4,0.4-0.4,1.1,0,1.6c0.2,0.2,0.5,0.3,0.8,0.3c0.3,0,0.6-0.1,0.8-0.3c1.9-1.9,2.8-4.3,2.8-6.7C21.6,11.7,20.7,9.3,18.8,7.4z"/>
-                <path class="st0" d="M21.8,3.9c-0.4-0.4-1.1-0.4-1.6,0c-0.4,0.4-0.4,1.1,0,1.6c2.4,2.4,3.6,5.5,3.6,8.7c0,3.2-1.2,6.3-3.6,8.7
-                  c-0.4,0.4-0.4,1.1,0,1.6c0.2,0.2,0.5,0.3,0.8,0.3c0.3,0,0.6-0.1,0.8-0.3c2.8-2.8,4.2-6.6,4.2-10.3C26.1,10.4,24.6,6.7,21.8,3.9z"
+              <g>
+                <path d="M392.9,255.8h-18.3c-2.7,0-4.9,0.9-6.6,2.6c-1.7,1.7-2.6,3.9-2.6,6.6v91.4c0,12.6-4.5,23.3-13.4,32.3
+                  c-8.9,8.9-19.7,13.4-32.3,13.4H82.2c-12.6,0-23.3-4.5-32.3-13.4c-8.9-8.9-13.4-19.7-13.4-32.3V118.8c0-12.6,4.5-23.3,13.4-32.3
+                  c8.9-8.9,19.7-13.4,32.3-13.4h201c2.7,0,4.9-0.9,6.6-2.6c1.7-1.7,2.6-3.9,2.6-6.6V45.7c0-2.7-0.9-4.9-2.6-6.6
+                  c-1.7-1.7-3.9-2.6-6.6-2.6h-201c-22.6,0-42,8-58.1,24.1C8,76.8,0,96.1,0,118.8v237.5c0,22.6,8,42,24.1,58.1
+                  c16.1,16.1,35.5,24.1,58.1,24.1h237.5c22.6,0,42-8,58.1-24.1C394,398.3,402,379,402,356.3V265c0-2.7-0.9-4.9-2.6-6.6
+                  C397.7,256.7,395.5,255.8,392.9,255.8z"/>
+                <path d="M506.2,5.4c-3.6-3.6-7.9-5.4-12.9-5.4H347.2c-4.9,0-9.2,1.8-12.8,5.4c-3.6,3.6-5.4,7.9-5.4,12.8s1.8,9.2,5.4,12.8
+                  l50.2,50.2L198.4,267.5c-1.9,1.9-2.9,4.1-2.9,6.6c0,2.5,1,4.7,2.9,6.6l32.5,32.5c1.9,1.9,4.1,2.9,6.6,2.9s4.7-0.9,6.6-2.9
+                  l186.1-186.1l50.3,50.2c3.6,3.6,7.9,5.4,12.8,5.4s9.2-1.8,12.9-5.4c3.6-3.6,5.4-7.9,5.4-12.8V18.3C511.6,13.3,509.8,9,506.2,5.4z"
                   />
-                <path class="st0" d="M25.5,0.3c-0.4-0.4-1.1-0.4-1.6,0c-0.4,0.4-0.4,1.1,0,1.6C27.3,5.3,29,9.7,29,14.1c0,4.4-1.7,8.9-5.1,12.3
-                  c-0.4,0.4-0.4,1.1,0,1.6c0.2,0.2,0.5,0.3,0.8,0.3c0.3,0,0.6-0.1,0.8-0.3c3.8-3.8,5.7-8.8,5.7-13.8C31.2,9.1,29.3,4.1,25.5,0.3z"/>
               </g>
             </g>
             </svg>
-            <input type="range" ref="volume" class="player__volume-slider" :class="{'visible': showVolume}" v-model.number="volume" @input="changeVolume" @blur="showVolume = false" min="1" max="10">
+            </button>
+  
+            <div @mousedown.self.prevent="showVolume = !showVolume" class="player__button player__volume">
+              <svg version="1.1" class="player__volume-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+  	            viewBox="0 0 31.2 28.3" style="enable-background:new 0 0 31.2 28.3;" xml:space="preserve">
+              <g>
+                <g id="c75_volume">
+                  <path class="st0" d="M4.4,9.3H0V19h4.4l8.2,6.1c0,0,1.5,1.3,1.5,0c0-1.3,0-20.9,0-22.1c0-1-1.3,0-1.3,0L4.4,9.3z"/>
+                  <path class="st0" d="M18.8,7.4c-0.4-0.4-1.1-0.4-1.6,0c-0.4,0.4-0.4,1.1,0,1.6c1.4,1.4,2.1,3.3,2.1,5.2c0,1.9-0.7,3.7-2.1,5.2
+                    c-0.4,0.4-0.4,1.1,0,1.6c0.2,0.2,0.5,0.3,0.8,0.3c0.3,0,0.6-0.1,0.8-0.3c1.9-1.9,2.8-4.3,2.8-6.7C21.6,11.7,20.7,9.3,18.8,7.4z"/>
+                  <path class="st0" d="M21.8,3.9c-0.4-0.4-1.1-0.4-1.6,0c-0.4,0.4-0.4,1.1,0,1.6c2.4,2.4,3.6,5.5,3.6,8.7c0,3.2-1.2,6.3-3.6,8.7
+                    c-0.4,0.4-0.4,1.1,0,1.6c0.2,0.2,0.5,0.3,0.8,0.3c0.3,0,0.6-0.1,0.8-0.3c2.8-2.8,4.2-6.6,4.2-10.3C26.1,10.4,24.6,6.7,21.8,3.9z"
+                    />
+                  <path class="st0" d="M25.5,0.3c-0.4-0.4-1.1-0.4-1.6,0c-0.4,0.4-0.4,1.1,0,1.6C27.3,5.3,29,9.7,29,14.1c0,4.4-1.7,8.9-5.1,12.3
+                    c-0.4,0.4-0.4,1.1,0,1.6c0.2,0.2,0.5,0.3,0.8,0.3c0.3,0,0.6-0.1,0.8-0.3c3.8-3.8,5.7-8.8,5.7-13.8C31.2,9.1,29.3,4.1,25.5,0.3z"/>
+                </g>
+              </g>
+              </svg>
+              <input type="range" ref="volume" class="player__volume-slider" :class="{'visible': showVolume}" v-model.number="volume" @input="changeVolume" @blur="showVolume = false" min="1" max="10">
+            </div>
           </div>
 
         </div>
@@ -79,6 +105,9 @@ export default {
       return `${
         this.$store.state.playerData.stream_url
       }?client_id=${CLIENT_ID}`;
+    },
+    trackURL() {
+      return this.$store.state.playerData.permalink_url;
     },
     trackImage() {
       if (this.$store.state.playerData.artwork_url.includes("large")) {
@@ -149,6 +178,10 @@ export default {
     },
     setTime(e) {
       this.player.currentTime = e.target.value;
+    },
+    copyLink() {
+      this.$refs.link.select();
+      document.execCommand("copy");
     },
     _playerHandler() {
       if (this.player.readyState >= 2) {
@@ -248,21 +281,25 @@ export default {
   }
   &__widget {
     visibility: hidden;
-    height: 56px;
     width: 100%;
-    display: flex;
-    align-items: center;
+    display: block;
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.5);
     @include box-shadow;
-    padding: 0 8px;
+    padding: 1em;
     margin-top: 1em;
   }
   &__progress {
     height: 20px;
-    flex-grow: 1;
+    width: 100%;
   }
-  &__buttons {
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1em;
+  }
+  &__play-pause-buttons {
     position: relative;
     width: 40px;
     height: 100%;
@@ -288,6 +325,33 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
+  }
+  &__share {
+    position: relative;
+    &:hover {
+      .player__share-link {
+        display: block;
+      }
+    }
+  }
+  &__share-icon {
+    width: 24px;
+  }
+  &__share-link {
+    color: black;
+    border: 1px solid black;
+    outline: none;
+    position: absolute;
+    bottom: 110%;
+    width: 400px;
+    left: 0;
+    transform: translateX(-50%);
+    background-color: white;
+    padding-left: 4px;
+    padding-right: 4px;
+    opacity: 1;
+    z-index: 4;
+    display: none;
   }
   &__volume {
     position: relative;
@@ -406,9 +470,7 @@ export default {
   }
 }
 .widget-visible {
-  // position: static;
   visibility: visible;
-  display: flex;
 }
 
 .visible {
