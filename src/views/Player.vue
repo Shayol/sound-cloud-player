@@ -7,7 +7,7 @@
         <h2  class="player__track-title">{{trackTitle}}</h2>
       </div>
       <div v-else class="player__content" key="image">
-        <div class="player__image-wrapper" :class="{'player__image-wrapper--inactive': paused}" @click="showWidget=true">
+        <div class="player__image-wrapper" :class="{'player__image-wrapper--inactive': paused}">
 
           <img :src="trackImage" alt="track image" class="player__image">
         </div>
@@ -109,13 +109,14 @@ export default {
     }
   },
   watch: {
-    showWidget: function(value) {
-      if (value && this.streamURL) {
+    streamURL: function(url) {
+      if (url) {
+        this.showWidget = true;
         if (this.player.src) {
-          this.player.src = this.streamURL;
+          this.player.src = url;
           this.player.load();
         } else {
-          let player = new Audio(this.streamURL);
+          let player = new Audio(url);
           this.player = player;
         }
         this.player.addEventListener("loadeddata", this._playerHandler);
@@ -125,7 +126,7 @@ export default {
     },
     trackTitle: function() {
       this.animationStageOne = true;
-      this.showWidget = false;
+      // this.showWidget = false;
     },
     showVolume: function(value) {
       if (value) {
@@ -138,7 +139,7 @@ export default {
       if (el.classList.contains("player__title-wrapper")) {
         setTimeout(() => {
           this.animationStageOne = false;
-        }, 200);
+        }, 300);
       }
     },
     changeVolume() {
@@ -248,17 +249,16 @@ export default {
     display: block;
   }
   &__widget {
-    position: absolute;
     visibility: hidden;
     height: 56px;
+    width: 100%;
     display: flex;
     align-items: center;
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.5);
     @include box-shadow;
-    position: absolute;
     padding: 0 8px;
-    margin-top: 16px;
+    margin-top: 1em;
   }
   &__progress {
     height: 20px;
@@ -408,10 +408,9 @@ export default {
   }
 }
 .widget-visible {
-  position: static;
+  // position: static;
   visibility: visible;
   display: flex;
-  width: 100%;
 }
 
 .visible {
