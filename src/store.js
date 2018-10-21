@@ -12,7 +12,7 @@ export default new Vuex.Store({
   state: {
     query: "",
     results: [],
-    page: 1,
+    offset: 1,
     next_href: '',
     history: [],
     playerData: {
@@ -23,7 +23,8 @@ export default new Vuex.Store({
     displayThumbnails: false,
     default_img: './soundcloud-logo.jpg',
     page_size: 6,
-    notFound: false
+    notFound: false,
+    page: 0
   },
   mutations: {
     updateQuery(state, payload) {
@@ -38,8 +39,11 @@ export default new Vuex.Store({
     updateNextHref(state, payload) {
       state.next_href = payload.next_href;
     },
-    updatePage(state) {
-      state.page++;
+    updateOffset(state) {
+      state.offset++;
+    },
+    updatePage(state, { value }) {
+      state.page = value;
     },
     updatePlayer(state, { title, stream_url, artwork_url }) {
       artwork_url = artwork_url || state.default_img;
@@ -53,8 +57,8 @@ export default new Vuex.Store({
       state.displayThumbnails = !state.displayThumbnails;
       localStorage.setItem("display-pref", JSON.stringify(state.displayThumbnails));
     },
-    clearPageCount(state) {
-      state.page = 1;
+    clearOffsetCount(state) {
+      state.offset = 1;
     },
     updateHistory(state) {
       if (state.history.indexOf(state.query) == -1) {
@@ -88,7 +92,8 @@ export default new Vuex.Store({
 
         context.commit("updateResults", { collection: tracks.collection });
         context.commit('updateHistory');
-        context.commit('clearPageCount');
+        context.commit('clearOffsetCount');
+        context.commit('updatePage', { value: 0 });
 
         if (!context.state.results.length) {
           context.commit("updateNotFound", { value: true });
@@ -99,16 +104,16 @@ export default new Vuex.Store({
 
         if (tracks.next_href) {
           context.commit("updateNextHref", { next_href: tracks.next_href });
-          context.commit("updatePage");
+          context.commit("updateOffset");
         }
         else {
           context.commit("updateNextHref", { next_href: "" });
-          context.commit("clearPageCount");
+          context.commit("clearOffsetCount");
         }
       });
     },
     nextPage(context) {
-      context.commit("updatePage");
+      context.commit("updateOffset");
       return SC.get('/tracks', {
 
         q: context.state.query,

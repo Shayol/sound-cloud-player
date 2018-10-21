@@ -69,11 +69,6 @@ export default {
   components: {
     SearchResult
   },
-  data: function() {
-    return {
-      page: 0
-    };
-  },
   created() {
     this.$store.commit("initializeDisplayThumbnails");
   },
@@ -84,6 +79,14 @@ export default {
       },
       set(value) {
         this.$store.commit("updateQuery", { value: value });
+      }
+    },
+    page: {
+      get() {
+        return this.$store.state.page;
+      },
+      set(value) {
+        this.$store.commit("updatePage", { value: value });
       }
     },
     results() {

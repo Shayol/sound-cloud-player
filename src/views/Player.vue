@@ -126,7 +126,6 @@ export default {
     },
     trackTitle: function() {
       this.animationStageOne = true;
-      // this.showWidget = false;
     },
     showVolume: function(value) {
       if (value) {
@@ -146,7 +145,6 @@ export default {
       this.player.volume = this.volume / 10;
     },
     hideVolume(e) {
-      console.log(e.target);
       this.showVolume = false;
     },
     setTime(e) {
