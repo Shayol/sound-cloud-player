@@ -97,4 +97,9 @@ export default {
 .invisible {
   display: none;
 }
+@media (min-width: $large-desktop) {
+  .search-result__title {
+    margin-bottom: 24px;
+  }
+}
 </style>

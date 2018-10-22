@@ -60,5 +60,11 @@ export default {
   @media (min-width: $desktop) {
     padding: 0;
   }
+
+  @media (min-width: $large-desktop) {
+    &__header {
+      margin-bottom: 24px;
+    }
+  }
 }
 </style>

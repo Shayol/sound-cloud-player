@@ -171,6 +171,10 @@ export default {
     opacity: 0.8;
     &:focus {
       opacity: 1;
+      ~ .search__delete {
+        opacity: 1;
+        z-index: 2;
+      }
     }
 
     background: #818181;
@@ -208,7 +212,8 @@ export default {
     border-radius: 100%;
     fill: rgb(194, 8, 8);
     display: block;
-    z-index: 2;
+    z-index: -1;
+    opacity: 0;
   }
   &__bottom-buttons {
     margin-top: auto;
@@ -269,6 +274,7 @@ export default {
   }
   &__results {
     padding: 1em;
+    max-height: 300px;
   }
   &__not-found {
     padding: 1em;
@@ -279,7 +285,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  height: calc(100% - 110px);
+  flex-grow: 1;
   align-content: space-between;
 }
 
