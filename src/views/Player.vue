@@ -96,10 +96,23 @@ export default {
       totalDuration: "",
       timeNow: 0,
       paused: true,
-      volume: 10
+      volume: 10,
+      mediaQ: {},
+      imgStr: "t300x300"
     };
   },
-  mounted() {},
+  mounted() {
+    let self = this;
+    let mediaQ = window.matchMedia("(min-width: 1600px)");
+    mediaQ.addListener(e => {
+      if (e.matches) {
+        self.imgStr = "crop";
+      }
+    });
+    if (mediaQ.matches) {
+      self.imgStr = "crop";
+    }
+  },
   computed: {
     streamURL() {
       return `${
@@ -113,7 +126,7 @@ export default {
       if (this.$store.state.playerData.artwork_url.includes("large")) {
         return this.$store.state.playerData.artwork_url.replace(
           "large",
-          "t300x300"
+          this.imgStr
         );
       } else {
         return this.$store.state.playerData.artwork_url;
@@ -491,6 +504,12 @@ export default {
 @media (min-width: $tablet) {
   .player {
     padding: 0;
+  }
+}
+@media (min-width: $large-desktop) {
+  .player__image {
+    max-width: 400px;
+    max-height: 400px;
   }
 }
 </style>

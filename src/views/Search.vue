@@ -274,7 +274,6 @@ export default {
   }
   &__results {
     padding: 1em;
-    max-height: 300px;
   }
   &__not-found {
     padding: 1em;
@@ -286,7 +285,7 @@ export default {
   flex-wrap: wrap;
   justify-content: space-around;
   flex-grow: 1;
-  align-content: space-between;
+  align-content: space-around;
 }
 
 @media (min-width: $tablet) {
