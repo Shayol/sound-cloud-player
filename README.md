@@ -1,9 +1,10 @@
 # sound-cloud-player
 
 <bold>sound-cloud-player<bold> allows:
- 1. search track via SoundCloud provided API
+ 1. search tracks via SoundCloud provided API
  2. last 5 search queries are save in history (localStorage)
- 3. search results might be displayed as list or thumbnails - this preferance is also saved  4. play track.
+ 3. search results might be displayed as list or thumbnails - this preferance is also saved  
+ 4. play track.
  5. pause playbeck
  6. adjust volume
  7. seek in track

@@ -56,5 +56,9 @@ export default {
       text-decoration: underline;
     }
   }
+
+  @media (min-width: $desktop) {
+    padding: 0;
+  }
 }
 </style>

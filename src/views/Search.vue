@@ -207,7 +207,7 @@ export default {
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 100%;
     fill: rgb(194, 8, 8);
-
+    display: block;
     z-index: 2;
   }
   &__bottom-buttons {
