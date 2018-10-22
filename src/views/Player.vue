@@ -28,8 +28,8 @@
               <button v-if="paused" class="player__play player__button" @click="player.play()">&#9658;</button>            
             </div>
 
+            
             <button @click="copyLink" class="player__button player__share">
-            <input type="text" ref="link" :value="trackURL" class="player__share-link" spellcheck="false"/>
   
             <svg class="player__share-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
               viewBox="0 0 511.6 438.5" style="enable-background:new 0 0 511.6 438.5;" xml:space="preserve">
@@ -49,7 +49,7 @@
             </g>
             </svg>
             </button>
-  
+            <textarea ref="link" :value="trackURL" class="player__share-link" spellcheck="false"></textarea>
             <div @mousedown.self.prevent="showVolume = !showVolume" class="player__button player__volume">
               <svg version="1.1" class="player__volume-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                 viewBox="0 0 31.2 28.3" style="enable-background:new 0 0 31.2 28.3;" xml:space="preserve">
@@ -298,6 +298,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding-top: 1em;
+    position: relative;
   }
   &__play-pause-buttons {
     position: relative;
@@ -327,28 +328,27 @@ export default {
     left: 0;
   }
   &__share {
-    position: relative;
-    &:hover {
-      .player__share-link {
-        display: block;
-      }
+    &:hover ~ .player__share-link {
+      display: block;
     }
   }
   &__share-icon {
     width: 24px;
   }
   &__share-link {
-    color: black;
-    border: 1px solid black;
+    color: white;
+    border: 0;
     outline: none;
     position: absolute;
-    bottom: 110%;
-    width: 400px;
-    left: 0;
+    bottom: 90%;
+    width: 100%;
+    max-width: 90vw;
+    left: 50%;
     transform: translateX(-50%);
     background-color: white;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 8px;
     opacity: 1;
     z-index: 4;
     display: none;
