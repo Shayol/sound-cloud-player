@@ -15,7 +15,7 @@
 
 <style lang="scss">
 .container {
-  height: 100%;
+  // height: 100%;
   min-width: 320px;
   max-width: 960px;
   margin-left: auto;
@@ -30,6 +30,8 @@
 }
 .page {
   max-width: 960px;
+  flex-shrink: 0;
+  flex-grow: 1;
   width: 100%;
   min-height: 500px;
   display: flex;
@@ -38,7 +40,7 @@
 
   justify-content: space-between;
   &__search {
-    flex-shrink: 0;
+    // flex-shrink: 0;
   }
   &__item {
     flex-basis: 100%;

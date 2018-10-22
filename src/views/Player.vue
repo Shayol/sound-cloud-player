@@ -52,7 +52,7 @@
   
             <div @mousedown.self.prevent="showVolume = !showVolume" class="player__button player__volume">
               <svg version="1.1" class="player__volume-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-  	            viewBox="0 0 31.2 28.3" style="enable-background:new 0 0 31.2 28.3;" xml:space="preserve">
+                viewBox="0 0 31.2 28.3" style="enable-background:new 0 0 31.2 28.3;" xml:space="preserve">
               <g>
                 <g id="c75_volume">
                   <path class="st0" d="M4.4,9.3H0V19h4.4l8.2,6.1c0,0,1.5,1.3,1.5,0c0-1.3,0-20.9,0-22.1c0-1-1.3,0-1.3,0L4.4,9.3z"/>
@@ -173,7 +173,7 @@ export default {
     changeVolume() {
       this.player.volume = this.volume / 10;
     },
-    hideVolume(e) {
+    hideVolume() {
       this.showVolume = false;
     },
     setTime(e) {
@@ -218,6 +218,7 @@ export default {
 <style lang="scss">
 .player {
   position: relative;
+  padding: 0 1em;
   &__title-wrapper {
     display: flex;
     justify-content: center;
@@ -280,9 +281,8 @@ export default {
     display: block;
   }
   &__widget {
-    visibility: hidden;
+    display: none;
     width: 100%;
-    display: block;
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.5);
     @include box-shadow;
@@ -470,7 +470,7 @@ export default {
   }
 }
 .widget-visible {
-  visibility: visible;
+  display: block;
 }
 
 .visible {
@@ -486,6 +486,12 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+@media (min-width: $tablet) {
+  .player {
+    padding: 0;
+  }
 }
 </style>
 

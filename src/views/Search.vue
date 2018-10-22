@@ -166,6 +166,7 @@ export default {
     outline: none;
     font-size: 16px;
     padding: 8px 32px 8px 16px;
+    width: 100%;
 
     opacity: 0.8;
     &:focus {
@@ -295,19 +296,6 @@ export default {
   }
 }
 @media (min-width: $desktop) {
-  .search {
-    // &__nav {
-    //   height: 20px;
-    //   width: 40px;
-    // }
-    // &__display-list {
-    //   height: 20px;
-    // }
-    // &__display-thumbnails {
-    //   width: 20px;
-    //   height: 20px;
-    // }
-  }
 }
 </style>
 
