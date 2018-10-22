@@ -32,7 +32,6 @@
   @include paper-box-shadow;
 }
 .page {
-  max-width: 960px;
   flex-shrink: 0;
   flex-grow: 1;
   width: 100%;
@@ -113,6 +112,17 @@
       flex-basis: 30%;
       min-height: 500px;
       margin-bottom: 0;
+    }
+  }
+}
+@media (min-width: $large-desktop) {
+  .container {
+    width: 1200px;
+  }
+  .page {
+    min-height: 700px;
+    &__item {
+      min-height: 700px;
     }
   }
 }
