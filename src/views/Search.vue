@@ -4,7 +4,7 @@
     <form action="" @submit.prevent="searchTrack" class="search__form">
       <div class="search__input-wrapper">
         <input placeholder="Search..." spellcheck="false" type="text" v-model.trim="query" class="search__input">
-        <svg class="search__delete" @click ="query=''" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        <svg v-show="query" class="search__delete" @click ="query=''" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
             viewBox="0 0 13.5 15.3" style="enable-background:new 0 0 13.5 15.3;" xml:space="preserve">
           <g>
             <rect x="6.3" y="-1" transform="matrix(0.7572 -0.6532 0.6532 0.7572 -3.3576 6.2765)" width="1" height="17.4"/>
