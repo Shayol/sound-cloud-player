@@ -3,7 +3,7 @@
     
     <form action="" @submit.prevent="searchTrack" class="search__form">
       <div ref="search-wrapper" class="search__input-wrapper">
-        <input placeholder="Search..." spellcheck="false" type="text" v-model.trim="query" class="search__input">
+        <input placeholder="Search..." spellcheck="false" type="text" @keydown.enter.prevent="searchTrack" v-model.trim="query" class="search__input">
         <button v-show="query" @click.prevent ="query=''" class="search__delete-button">
           <svg class="search__delete"  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
               viewBox="0 0 13.5 15.3" style="enable-background:new 0 0 13.5 15.3;" xml:space="preserve">
