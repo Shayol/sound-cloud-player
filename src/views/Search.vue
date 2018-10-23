@@ -188,7 +188,7 @@ export default {
       }
     }
 
-    background: #818181;
+    background: $light-grey;
     box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.5),
       inset 0 -4px 8px rgba(0, 0, 0, 0.5);
 
@@ -206,7 +206,7 @@ export default {
     position: relative;
     border: none;
     height: 56px;
-    background-image: linear-gradient(to bottom, #818181, #555);
+    background-image: linear-gradient(to bottom, $light-grey, $grey);
     color: white;
     opacity: 0.8;
     font-family: Verdana, Geneva, Tahoma, sans-serif;

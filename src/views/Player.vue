@@ -243,13 +243,13 @@ export default {
   }
   &__track-title {
     font-size: 26px;
-    color: #555;
+    color: $grey;
     display: inline-block;
     margin-top: auto;
     margin-bottom: auto;
     text-align: center;
     font-weight: bold;
-    text-shadow: 2px 2px 5px #555;
+    text-shadow: 2px 2px 5px $grey;
   }
   &__content {
     position: relative;
@@ -404,7 +404,7 @@ export default {
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
         0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2),
         inset 0 3px 2px rgba(255, 255, 255, 0.22),
-        inset 0 -3px 2px rgba(0, 0, 0, 0.15), inset -1px -1px 2px #818181,
+        inset 0 -3px 2px rgba(0, 0, 0, 0.15), inset -1px -1px 2px $light-grey,
         inset 0 20px 10px rgba(255, 255, 255, 0.12),
         0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
     }
@@ -453,7 +453,7 @@ export default {
   box-sizing: border-box;
   display: inline-block;
   position: relative;
-  background: #818181;
+  background: $light-grey;
   border-radius: 20px;
   padding: 4px 6px;
   box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);

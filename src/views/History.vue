@@ -49,7 +49,7 @@ export default {
     margin-bottom: 16px;
     font-size: 12px;
     color: black;
-    text-decoration-color: #555;
+    text-decoration-color: $grey;
     font-weight: bold;
     text-shadow: 0.5px 0.5px rgba(85, 85, 85, 0.5);
     &:hover {
