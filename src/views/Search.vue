@@ -2,19 +2,21 @@
   <div class="search">
     
     <form action="" @submit.prevent="searchTrack" class="search__form">
-      <div class="search__input-wrapper">
+      <div ref="search-wrapper" class="search__input-wrapper">
         <input placeholder="Search..." spellcheck="false" type="text" v-model.trim="query" class="search__input">
-        <svg v-show="query" class="search__delete" @click ="query=''" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            viewBox="0 0 13.5 15.3" style="enable-background:new 0 0 13.5 15.3;" xml:space="preserve">
-          <g>
-            <rect x="6.3" y="-1" transform="matrix(0.7572 -0.6532 0.6532 0.7572 -3.3576 6.2765)" width="1" height="17.4"/>
-            <polygon points="1.5,0 0,1.3 12,15.3 13.5,14 1.5,0 	"/>
-          </g>
-          <g>
-            <rect x="-1.9" y="7.2" transform="matrix(0.6477 -0.7619 0.7619 0.6477 -3.4491 7.8492)" width="17.4" height="1"/>
-            <polygon points="12,0 0,14 1.6,15.3 13.5,1.3 12,0 	"/>
-          </g>
-        </svg>
+        <button v-show="query" @click.prevent ="query=''" class="search__delete-button">
+          <svg class="search__delete"  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              viewBox="0 0 13.5 15.3" style="enable-background:new 0 0 13.5 15.3;" xml:space="preserve">
+            <g>
+              <rect x="6.3" y="-1" transform="matrix(0.7572 -0.6532 0.6532 0.7572 -3.3576 6.2765)" width="1" height="17.4"/>
+              <polygon points="1.5,0 0,1.3 12,15.3 13.5,14 1.5,0 	"/>
+            </g>
+            <g>
+              <rect x="-1.9" y="7.2" transform="matrix(0.6477 -0.7619 0.7619 0.6477 -3.4491 7.8492)" width="17.4" height="1"/>
+              <polygon points="12,0 0,14 1.6,15.3 13.5,1.3 12,0 	"/>
+            </g>
+          </svg>
+          </button>
       </div>
       <button type="submit" class="search__submit">
         Go
@@ -119,6 +121,9 @@ export default {
     },
     notFound() {
       return this.$store.state.notFound;
+    },
+    delShown() {
+      // return query &&
     }
   },
   methods: {
@@ -156,6 +161,12 @@ export default {
   &__input-wrapper {
     flex-grow: 1;
     position: relative;
+    &:focus {
+      ~ .search__delete {
+        opacity: 1;
+        z-index: 2;
+      }
+    }
   }
 
   &__input {
@@ -171,7 +182,7 @@ export default {
     opacity: 0.8;
     &:focus {
       opacity: 1;
-      ~ .search__delete {
+      ~ .search__delete-button {
         opacity: 1;
         z-index: 2;
       }
@@ -200,20 +211,31 @@ export default {
     opacity: 0.8;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
-  &__delete {
+  &__delete-button {
     position: absolute;
+    padding: 0;
+    border: 0;
+    outline: none;
     right: 8px;
     top: 50%;
     transform: translateY(-50%);
     width: 16px;
     height: 16px;
-    padding: 4px;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 100%;
-    fill: rgb(194, 8, 8);
     display: block;
     z-index: -1;
     opacity: 0;
+    &:focus {
+      opacity: 1;
+      z-index: 2;
+    }
+  }
+  &__delete {
+    fill: rgb(194, 8, 8);
+    width: 16px;
+    height: 16px;
+    padding: 4px;
   }
   &__bottom-buttons {
     margin-top: auto;
