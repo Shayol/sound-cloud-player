@@ -399,12 +399,12 @@ export default {
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      background: $green-light;
+      background: #fff;
       cursor: pointer;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
         0 2px 2px rgba(0, 0, 0, 0.3), 0 0 4px 1px rgba(0, 0, 0, 0.2),
         inset 0 3px 2px rgba(255, 255, 255, 0.22),
-        inset 0 -3px 2px rgba(0, 0, 0, 0.15), inset -1px -1px 2px $green-dark,
+        inset 0 -3px 2px rgba(0, 0, 0, 0.15), inset -1px -1px 2px #818181,
         inset 0 20px 10px rgba(255, 255, 255, 0.12),
         0 0 4px 1px rgba(0, 0, 0, 0.1), 0 3px 2px rgba(0, 0, 0, 0.2);
     }
@@ -413,7 +413,7 @@ export default {
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      background: #b6ffc1;
+      background: #fff;
       cursor: pointer;
     }
   }
@@ -465,7 +465,7 @@ export default {
     border-bottom-right-radius: 20px;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
-    background-image: linear-gradient(to bottom, #b6ffc1, #50b561);
+    background-color: white;
     box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3),
       inset 0 -2px 6px rgba(0, 0, 0, 0.4);
     position: relative;
