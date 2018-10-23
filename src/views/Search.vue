@@ -121,9 +121,6 @@ export default {
     },
     notFound() {
       return this.$store.state.notFound;
-    },
-    delShown() {
-      // return query &&
     }
   },
   methods: {
